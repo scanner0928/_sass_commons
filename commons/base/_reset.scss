@@ -1,0 +1,71 @@
+@charset "UTF-8";
+/* Box sizing rules */
+/* Box sizingの定義 */
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+/* Remove default padding */
+/* デフォルトのpaddingを削除 */
+ol,
+ul {
+  padding: 0;
+}
+/* Remove default margin */
+/* デフォルトのmarginを削除 */
+blockquote,
+body,
+dd,
+dl,
+figcaption,
+figure,
+h1,
+h2,
+h3,
+h4,
+li,
+// ol[class],
+// ul[class]
+p {
+  margin: 0;
+}
+/* Set core body defaults */
+/* bodyのデフォルトを定義 */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+/* Remove list styles on ul, ol elements with a class attribute */
+/* class属性を持つul、ol要素のリストスタイルを削除 */
+ol[class],
+ul[class] {
+  list-style: none;
+}
+/* A elements that don't have a class get default styles */
+/* classを持たない要素はデフォルトのスタイルを取得 */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+/* Make images easier to work with */
+/* img要素の扱いを簡単にする */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+/* Natural flow and rhythm in articles by default */
+/* article要素内の要素に自然な流れとリズムを定義 */
+article > * + * {
+  margin-top: 1em;
+}
+/* Inherit fonts for inputs and buttons */
+/* inputやbuttonなどのフォントは継承を定義 */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}

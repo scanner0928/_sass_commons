@@ -1,0 +1,34 @@
+.snsList {
+  @include marginVertical($ratio: 0.5);
+  a {
+    position: relative;
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    &:before {
+      font-size: 3rem;
+      margin: 0;
+    }
+    &:not(:first-child) {
+      margin-left: 1rem;
+    }
+  }
+  .sns--fb {
+    &:before {
+      @include icon-facebook-square();
+    }
+  }
+  .sns--tw {
+    &:before {
+      @include icon-twitter();
+    }
+  }
+  .sns--ig {
+    &:before {
+      @include icon-instagram();
+    }
+  }
+}
+.langNav {
+  @include marginVertical($ratio: 0.25);
+}

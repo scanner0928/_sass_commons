@@ -1,0 +1,139 @@
+/* menu toggle */
+
+$toggleBgColor: #c0c0c0 !default;
+$toggleColor: #fff !default;
+$toggleSize: 4rem !default;
+$toggleSize-pc: 4vw !default;
+$from_bottom: 2vw !default;
+$from_edge: 2vw !default;
+
+%toggleGnavBtn {
+  $bar-margin: 7px;
+
+  display: block;
+
+  span {
+    display: block;
+    background: $toggleColor;
+    width: 40%;
+    height: 3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+  }
+
+  span:first-child {
+    -webkit-transform: translate(-50%, -$bar-margin);
+    -moz-transform: translate(-50%, -$bar-margin);
+    -ms-transform: translate(-50%, -$bar-margin);
+    -o-transform: translate(-50%, -$bar-margin);
+    transform: translate(-50%, -$bar-margin);
+  }
+
+  span:nth-child(2) {
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+
+  span:last-child {
+    -webkit-transform: translate(-50%, $bar-margin);
+    -moz-transform: translate(-50%, $bar-margin);
+    -ms-transform: translate(-50%, $bar-margin);
+    -o-transform: translate(-50%, $bar-margin);
+    transform: translate(-50%, $bar-margin);
+  }
+
+  &.is-active {
+    // background-color: #DDDDDD;
+    //
+    // span {
+    //   background-color: #111;
+    // }
+  }
+
+  &.is-active span:first-child {
+    // -webkit-transform: translateY(8px) rotate(45deg);
+    // -moz-transform: translateY(8px) rotate(45deg);
+    // -ms-transform: translateY(8px) rotate(45deg);
+    // transform: translateY(8px) rotate(45deg);
+    transform: translateX(-50%) translateY(0) rotate(45deg);
+  }
+
+  &.is-active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  &.is-active span:last-child {
+    transform: translateX(-50%) translateY(0) rotate(-45deg);
+  }
+}
+@mixin toggle-btn-style {
+  display: block;
+  width: $toggleSize;
+  height: $toggleSize;
+  color: $toggleColor;
+  background-color: $toggleBgColor;
+  border: 4px solid darken($toggleBgColor, 5%);
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 99;
+  @include MQ(laptop) {
+    width: $toggleSize-pc;
+    height: $toggleSize-pc;
+  }
+}
+.controls {
+  & > * {
+    z-index: 99;
+  }
+}
+#menuToggle--gNav {
+  @include toggle-btn-style();
+  position: fixed;
+  bottom: $from_bottom;
+  left: $from_edge;
+  @extend %toggleGnavBtn;
+  @include MQ(laptop) {
+    display: none;
+  }
+}
+
+#menuToggle--pagetop {
+  // @include toggle-btn-style();
+  position: fixed;
+  bottom: $from_bottom;
+  right: $from_edge;
+
+  a {
+    @include toggle-btn-style();
+    position: relative;
+    text-decoration: none;
+    text-align: center;
+
+    &:before {
+      @include icon-caret-up;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+      font-size: 3rem !important;
+      color: $toggleColor;
+    }
+
+    span {
+      display: none;
+    }
+  }
+  @include MQ(laptop) {
+    a {
+      &:before {
+        font-size: 2vw !important;
+      }
+    }
+  }
+}

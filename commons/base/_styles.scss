@@ -1,0 +1,352 @@
+@charset "UTF-8";
+/* base */
+strong {
+  color: $strongColor;
+}
+/* styles */
+.js {
+  .-liquid {
+    img {
+      display: none;
+    }
+  }
+}
+.-thumbnail {
+  position: relative;
+  background-color: #ccc;
+  overflow: hidden;
+
+  &:before {
+    display: block;
+    content: "";
+    // padding-top: 62%;
+    padding-top: 71%;
+  }
+
+  & > img {
+    max-width: inherit;
+    width: 101%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.-credit {
+  text-align: right;
+}
+
+.tableScroll-wrapper {
+  position: relative;
+  padding: 0 0 1rem;
+  overflow: auto;
+  white-space: nowrap;
+
+  table {
+    width: 100%;
+  }
+
+  &::-webkit-scrollbar {
+    /*tableにスクロールバーを追加*/
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    /*tableにスクロールバーを追加*/
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    /*tableにスクロールバーを追加*/
+    background: #bcbcbc;
+  }
+}
+
+.scroll-notice {
+  padding: 0.5em 0;
+  text-align: right;
+  font-size: 80%;
+  color: $cautionColor;
+
+  &:before {
+    content: "左右にスクロールできます";
+  }
+}
+/* lists */
+ul.list {
+  list-style: none;
+  padding: 0;
+
+  li {
+    position: relative;
+    margin: 1em 0;
+    padding-left: 1.5em;
+
+    &:before {
+      display: block;
+      width: 1.5em;
+      height: 1.5em;
+      @include icon-caret-right;
+      position: absolute;
+      top: 0.1em;
+      left: 0.5em;
+      color: $subColor;
+    }
+  }
+}
+/* caution */
+.caution {
+  margin: 2rem 0 0;
+  font-size: 80%;
+  text-align: right;
+  line-height: 1.3;
+  color: $cautionColor;
+
+  & > * {
+    &:not(:first-child) {
+      margin-top: 0.5em;
+    }
+
+    &:before {
+      content: "※";
+      margin-right: 0.5em;
+    }
+  }
+}
+/* btn */
+.btn {
+  display: -webkit-flex;
+  display: flex;
+  -js-display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  margin: 3rem 0 0;
+
+  a {
+    padding: 1.5em 2.5em;
+    color: $btnTextColor;
+    background-color: $btnColor;
+    font-size: 95%;
+    font-weight: bold;
+    line-height: 1;
+    vertical-align: bottom;
+    text-decoration: none;
+    text-shadow: 1px 1px 2px #111;
+
+    &:before {
+      @include icon-caret-right;
+    }
+    &:hover {
+      background-color: darken($btnColor, 10%);
+    }
+  }
+
+  &.-center {
+    text-align: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+  }
+  @include MQ(sp-only) {
+    padding: 0 10%;
+    text-align: center;
+
+    a {
+      &:not(:first-child) {
+        margin-top: 1em;
+      }
+    }
+  }
+  @include MQ(tablet) {
+    -webkit-flex-direction: row;
+    flex-direction: row;
+
+    a {
+      &:not(:first-child) {
+        margin-left: 0.5em;
+      }
+    }
+  }
+  @include MQ(lower-tablet) {
+    -webkit-justify-content: center;
+    justify-content: center;
+  }
+}
+/* bootstrap alerts */
+%alert-shape {
+  padding: 1em;
+  margin: 1rem 0;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 90%;
+}
+
+.alert-success {
+  @extend %alert-shape;
+  background-color: #dff0d8;
+  border-color: #d0e9c6;
+  color: #3c763d;
+
+  a {
+    color: #2b542c;
+  }
+}
+
+.alert-info {
+  @extend %alert-shape;
+  background-color: #d9edf7;
+  border-color: #bcdff1;
+  color: #31708f;
+
+  a {
+    color: #245269;
+  }
+}
+
+.alert-warning {
+  @extend %alert-shape;
+  background-color: #fcf8e3;
+  border-color: #faf2cc;
+  color: #8a6d3b;
+
+  a {
+    color: #66512c;
+  }
+}
+
+.alert-error {
+  @extend %alert-shape;
+  background-color: #f2dede;
+  border-color: #ebcccc;
+  color: #a94442;
+
+  a {
+    color: #843534;
+  }
+}
+/* menu toggle */
+%toggleGnavBtn {
+  $bar-margin: 7px;
+  @include MQ(lower-tablet) {
+    display: block;
+
+    span {
+      display: block;
+      background: #fafafa;
+      width: 40%;
+      height: 3px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transition: all 0.4s;
+      -webkit-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+    }
+
+    span:first-child {
+      -webkit-transform: translate(-50%, -$bar-margin);
+      -moz-transform: translate(-50%, -$bar-margin);
+      -ms-transform: translate(-50%, -$bar-margin);
+      -o-transform: translate(-50%, -$bar-margin);
+      transform: translate(-50%, -$bar-margin);
+    }
+
+    span:nth-child(2) {
+      -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      transform: translateX(-50%);
+    }
+
+    span:last-child {
+      -webkit-transform: translate(-50%, $bar-margin);
+      -moz-transform: translate(-50%, $bar-margin);
+      -ms-transform: translate(-50%, $bar-margin);
+      -o-transform: translate(-50%, $bar-margin);
+      transform: translate(-50%, $bar-margin);
+    }
+
+    &.is-active {
+      // background-color: #DDDDDD;
+      //
+      // span {
+      //   background-color: #111;
+      // }
+    }
+
+    &.is-active span:first-child {
+      // -webkit-transform: translateY(8px) rotate(45deg);
+      // -moz-transform: translateY(8px) rotate(45deg);
+      // -ms-transform: translateY(8px) rotate(45deg);
+      // transform: translateY(8px) rotate(45deg);
+      transform: translateX(-50%) translateY(0) rotate(45deg);
+    }
+
+    &.is-active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    &.is-active span:last-child {
+      transform: translateX(-50%) translateY(0) rotate(-45deg);
+    }
+  }
+}
+@mixin toggle-btn-style {
+  display: block;
+  width: $toggleSize;
+  height: $toggleSize;
+  color: #fff;
+  background-color: $toggleColor;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 99;
+}
+#menuToggle--gNav {
+  @include toggle-btn-style();
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  @extend %toggleGnavBtn;
+  @include MQ(laptop) {
+    display: none;
+  }
+}
+
+#menuToggle--pagetop {
+  // @include toggle-btn-style();
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 99;
+
+  a {
+    @include toggle-btn-style();
+    position: relative;
+    text-decoration: none;
+    text-align: center;
+
+    &:before {
+      @include icon-caret-up;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+      font-size: 3rem !important;
+      color: #fafafa;
+    }
+
+    span {
+      display: none;
+    }
+  }
+  @include MQ(laptop) {
+    a {
+      width: 4vw;
+      height: 4vw;
+
+      &:before {
+        font-size: 2vw !important;
+      }
+    }
+  }
+}

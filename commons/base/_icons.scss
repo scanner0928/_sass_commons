@@ -1,0 +1,79 @@
+@charset "UTF-8";
+/* icons */
+%iconpadding {
+  &:after {
+    content: '';
+    display: inline-block;
+    margin-left: 0.5em;
+    width: 1em;
+    height: 1em;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+  }
+}
+/* Excel */
+a[href$='.xls'],
+a[href$='.xlsx'] {
+  @extend %iconpadding;
+  &:after {
+    background-image: url('../images/icons/icon-excel.png');
+  }
+}
+/* Word */
+a[href$='.doc'],
+a[href$='.docx'] {
+  @extend %iconpadding;
+  &:after {
+    background-image: url('../images/icons/icon-word.png');
+  }
+}
+/* PowerPoint */
+a[href$='.ppt'],
+a[href$='.pptx'] {
+  @extend %iconpadding;
+  &:after {
+    background-image: url('../images/icons/icon-powerpoint.png');
+  }
+}
+/* PDF */
+a[href$='.pdf'] {
+  @extend %iconpadding;
+  &:after {
+    background-image: url('../images/icons/icon-pdf.png');
+  }
+}
+/* Zip */
+a[href$='.zip'] {
+  @extend %iconpadding;
+  &:after {
+    background-image: url('../images/icons/icon-zip.png');
+  }
+}
+/* Text */
+a[href$='.txt'] {
+  @extend %iconpadding;
+  &:after {
+    background-image: url('../images/icons/icon-text.png');
+  }
+}
+/* GIF */
+a[href$='.gif'] {
+  @extend %iconpadding;
+  &:after {
+    background-image: url('../images/icons/icon-gif.png');
+  }
+}
+/* JPG */
+a[href$='.jpg'] {
+  @extend %iconpadding;
+  &:after {
+    background-image: url('../images/icons/icon-jpg.png');
+  }
+}
+/* PNG */
+a[href$='.png'] {
+  @extend %iconpadding;
+  &:after {
+    background-image: url('../images/icons/icon-png.png');
+  }
+}

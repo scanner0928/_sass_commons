@@ -1,0 +1,193 @@
+@charset "utf-8";
+
+$coffin: '#coffin' !default;
+$siteNavi: '#siteNavi' !default;
+$siteHeader: '#siteHeader' !default;
+$siteFooter: '#siteFooter' !default;
+$fiexdFooter: '#siteBottomFixed' !default;
+$siteMainBody: '#siteMainBody' !default;
+$siteContents: '#siteContents' !default;
+
+$siteHeaderWidth: 25rem !default;
+$siteHeaderColor: #333 !default;
+
+$siteNaviHeight-sp: 7vh !default;
+
+body {
+  max-width: 1920px;
+  margin: auto;
+  box-shadow: 1px 1px 4px 2px #000;
+}
+
+#coffin {
+  min-height: 100vh;
+  @include MQ(lower-tablet) {
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    #{$siteMainBody} {
+      flex: 1;
+      -webkit-flex: 1;
+    }
+  }
+}
+#{$siteMainBody} {
+  display: -webkit-flex;
+  display: flex;
+  -js-display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  #{$siteContents} {
+    flex: 1;
+    -webkit-flex: 1;
+  }
+
+  #{$fiexdFooter} {
+    position: sticky;
+    bottom: 0;
+  }
+}
+
+#{$siteNavi} {
+  // @include MQ(lower-tablet) {
+  //   @include inner-grid();
+  //   transition: all 0.5s ease-out;
+  //   visibility: hidden;
+  //   opacity: 0;
+  //   zoom: 1;
+  //   z-index: -1;
+
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 100%;
+  //   background-color: var(--navBgColor);
+  //   // z-index: 80;
+  //   .inner {
+  //     width: 100%;
+  //     // height: 100%;
+  //     display: -webkit-flex;
+  //     display: flex;
+  //     -js-display: flex;
+  //     -webkit-flex-direction: column;
+  //     flex-direction: column;
+  //     -webkit-justify-content: center;
+  //     justify-content: center;
+  //   }
+  //   &.is-active {
+  //     visibility: inherit;
+  //     z-index: 80;
+  //     opacity: 1;
+  //   }
+  // }
+  @include MQ(laptop) {
+    margin-top: 3rem;
+  }
+}
+
+/* layout */
+
+// @include MQ(lower-tablet) {
+//   #{$siteMainBody} {
+//     display: -webkit-flex;
+//     display: flex;
+//     -js-display: flex;
+//     -webkit-flex-direction: column;
+//     flex-direction: column;
+//   }
+//   #{$siteMainBody} {
+//     &-wrapper {
+//       flex: 1;
+//       -webkit-flex: 1;
+//     }
+//   }
+// }
+
+@include MQ(lower-tablet) {
+  #{$siteHeader} {
+    position: fixed;
+    z-index: 99;
+    // width: 40vw;
+    // max-width: 16rem;
+    // position: sticky;
+    // top: 0;
+    // z-index: 99;
+    .logo {
+      width: 40vw;
+      max-width: 10rem;
+      padding: 1rem 0;
+    }
+  }
+  #{$siteNavi} {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    .inner {
+      padding: 0;
+    }
+  }
+  #{$siteMainBody} {
+    padding-bottom: $siteNaviHeight-sp;
+  }
+
+  #gNav {
+    background-color: var(--headerBgColor);
+    // background-color: $navBgColor;
+    $selector: &;
+    height: $siteNaviHeight-sp;
+
+    a {
+      display: grid;
+      place-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+
+      font-size: 80%;
+    }
+  }
+}
+
+@include MQ(laptop) {
+  #{$coffin} {
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+  }
+
+  #{$siteHeader} {
+    width: 12%;
+    min-width: $siteHeaderWidth;
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: center;
+    justify-content: center;
+    // width: 100%;
+    min-height: 100vh;
+    border-right: 1px solid var(--subcolor);
+    background-color: var(--headerBgColor, #fff);
+
+    position: sticky;
+    top: 0;
+    @include padding-vertical($ratio: 0.1);
+    & > .inner {
+      padding: 0 2.5vw;
+    }
+  }
+  #{$siteMainBody} {
+    flex: 1;
+    -webkit-flex: 1;
+  }
+}
