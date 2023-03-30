@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@mixin eff-text($dir: 'left', $duration: 0.75s) {
+@mixin eff-text($dir: 'left', $duration: 0.2s) {
   $selector: &;
   position: relative;
   transition: all $duration ease;
@@ -73,13 +73,26 @@
 }
 
 @mixin eff-paintmove($dir: 'left', $duration: 0.75s, $color: #fff, $flash: false) {
+  /* imgの親要素の仕込む */
+
   $selector: &;
-  opacity: 0;
+  // opacity: 0;
   // -webkit-clip-path: inset(0 100% 0 0);
   // clip-path: inset(0 100% 0 0);
   transition: opacity $duration ease;
 
   @at-root {
+    #{$selector}:before {
+      background: $color;
+      bottom: 0;
+      content: '';
+      left: 0;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 1;
+    }
     *[data-emergence='visible'] {
       #{$selector} {
         opacity: 1;
@@ -96,15 +109,15 @@
         } @else {
           animation: img-wrap $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
-        background: $color;
-        bottom: 0;
-        content: '';
-        left: 0;
-        pointer-events: none;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 1;
+        // background: $color;
+        // bottom: 0;
+        // content: '';
+        // left: 0;
+        // pointer-events: none;
+        // position: absolute;
+        // right: 0;
+        // top: 0;
+        // z-index: 1;
       }
     }
   }
@@ -132,25 +145,94 @@
     }
   }
 }
-@mixin eff-opacity($duration: 0.75s) {
+@mixin eff-opacity-self($duration: 0.75s, $delay: 0s) {
+  &[data-emergence='hidden'] {
+    transition: opacity $duration ease-out $delay;
+    opacity: 0;
+  }
+  &[data-emergence='visible'] {
+    transition: opacity $duration ease-out $delay;
+    opacity: 1;
+  }
+}
+@mixin eff-opacity($duration: 0.75s, $delay: 0s) {
   $selector: &;
 
   @at-root {
     [data-emergence='hidden'] {
       #{$selector} {
-        transition: opacity $duration ease-out;
+        transition: opacity $duration ease-out $delay;
         opacity: 0;
       }
     }
     [data-emergence='visible'] {
       #{$selector} {
-        transition: opacity $duration ease-out;
+        transition: opacity $duration ease-out $delay;
         opacity: 1;
       }
     }
   }
 }
-@mixin eff-self-line($color: #fff, $dir: left, $duration: 0.5s, $delay: 0.2s) {
+@mixin eff-line-self($color: #fff, $dir: left, $duration: 0.5s, $delay: 0.2s) {
+  $selector: &;
+
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  line-height: 1.2;
+  z-index: 1;
+
+  &::after {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 1rem;
+    background: $color;
+
+    transition: transform $duration;
+    transition-delay: $delay;
+    opacity: 0.5;
+    z-index: -1;
+    @if $dir == bottom {
+      transform: scale(1, 0);
+      transform-origin: left bottom;
+    } @else {
+      transform: scale(0, 1);
+      transform-origin: left top;
+    }
+  }
+
+  &[data-emergence='visible'] {
+    &::after {
+      transform: scale(1, 1);
+    }
+  }
+}
+@mixin eff-line-self2($color: #fff, $dir: left, $duration: 5s, $delay: 2s) {
+  $selector: &;
+
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+
+  transition: transform $duration;
+  display: inline;
+  padding: 0 2px 4px;
+  background: linear-gradient(transparent 100%, #c86603 0%);
+
+  &[data-emergence='visible'] {
+    background: linear-gradient(transparent 70%, $color 0%);
+    // animation: underline $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes underline {
+    100% {
+      background: linear-gradient(transparent 70%, #ffdcb8 0%);
+    }
+  }
+}
+@mixin eff-strong-bg-self($color: #fff, $dir: left, $duration: 1s, $delay: 2s) {
   $selector: &;
 
   position: relative;
