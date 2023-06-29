@@ -1,16 +1,61 @@
 @charset "UTF-8";
-/* base */
-strong {
-  color: $strongColor;
-}
-/* styles */
-.js {
-  .-liquid {
-    img {
-      display: none;
+
+/* btn */
+@mixin btns() {
+  display: -webkit-flex;
+  display: flex;
+  -js-display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  @include margin-vertical($bottom: false, $ratio: 0.25);
+  & > * {
+    &:not(:first-child) {
+      margin: 1em 0 0;
     }
   }
 }
+@mixin btn($align: 'center') {
+  display: block;
+  a {
+    display: block;
+    padding: 1em 2em;
+    color: var(--btnColor-text, #222);
+    background-color: var(--btnColor, #666);
+    // font-size: 95%;
+    font-weight: bold;
+    line-height: 1;
+    vertical-align: bottom;
+    text-decoration: none;
+    border-radius: 1rem;
+    text-align: center;
+
+    &:before {
+      display: inline-block;
+      content: '';
+      height: 1em;
+      width: 1em;
+      background-color: var(--btnColor-text);
+      transition: background-color 0.4s;
+      vertical-align: middle;
+      margin-right: 0.5em;
+
+      -webkit-mask-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+      -webkit-mask-size: contain;
+      mask-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+      mask-size: contain;
+      mask-repeat: no-repeat;
+    }
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &.-center {
+  }
+}
+
+/* old */
+
 .-thumbnail {
   position: relative;
   background-color: #ccc;
@@ -18,7 +63,7 @@ strong {
 
   &:before {
     display: block;
-    content: "";
+    content: '';
     // padding-top: 62%;
     padding-top: 71%;
   }
@@ -31,10 +76,6 @@ strong {
     left: 50%;
     transform: translate(-50%, -50%);
   }
-}
-
-.-credit {
-  text-align: right;
 }
 
 .tableScroll-wrapper {
@@ -67,14 +108,14 @@ strong {
   padding: 0.5em 0;
   text-align: right;
   font-size: 80%;
-  color: $cautionColor;
+  color: var(--caution-color);
 
   &:before {
-    content: "左右にスクロールできます";
+    content: '左右にスクロールできます';
   }
 }
 /* lists */
-ul.list {
+%list {
   list-style: none;
   padding: 0;
 
@@ -87,21 +128,21 @@ ul.list {
       display: block;
       width: 1.5em;
       height: 1.5em;
-      @include icon-caret-right;
       position: absolute;
       top: 0.1em;
       left: 0.5em;
-      color: $subColor;
+      color: var(--subColor, #333);
+      @include svgIcon();
     }
   }
 }
 /* caution */
-.caution {
+%caution {
   margin: 2rem 0 0;
   font-size: 80%;
   text-align: right;
   line-height: 1.3;
-  color: $cautionColor;
+  color: var(--caution-color);
 
   & > * {
     &:not(:first-child) {
@@ -109,69 +150,12 @@ ul.list {
     }
 
     &:before {
-      content: "※";
+      content: '※';
       margin-right: 0.5em;
     }
   }
 }
-/* btn */
-.btn {
-  display: -webkit-flex;
-  display: flex;
-  -js-display: flex;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-  margin: 3rem 0 0;
 
-  a {
-    padding: 1.5em 2.5em;
-    color: $btnTextColor;
-    background-color: $btnColor;
-    font-size: 95%;
-    font-weight: bold;
-    line-height: 1;
-    vertical-align: bottom;
-    text-decoration: none;
-    text-shadow: 1px 1px 2px #111;
-
-    &:before {
-      @include icon-caret-right;
-    }
-    &:hover {
-      background-color: darken($btnColor, 10%);
-    }
-  }
-
-  &.-center {
-    text-align: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-  }
-  @include MQ(sp-only) {
-    padding: 0 10%;
-    text-align: center;
-
-    a {
-      &:not(:first-child) {
-        margin-top: 1em;
-      }
-    }
-  }
-  @include MQ(tablet) {
-    -webkit-flex-direction: row;
-    flex-direction: row;
-
-    a {
-      &:not(:first-child) {
-        margin-left: 0.5em;
-      }
-    }
-  }
-  @include MQ(lower-tablet) {
-    -webkit-justify-content: center;
-    justify-content: center;
-  }
-}
 /* bootstrap alerts */
 %alert-shape {
   padding: 1em;
@@ -225,128 +209,64 @@ ul.list {
   }
 }
 /* menu toggle */
-%toggleGnavBtn {
-  $bar-margin: 7px;
-  @include MQ(lower-tablet) {
-    display: block;
 
-    span {
-      display: block;
-      background: #fafafa;
-      width: 40%;
-      height: 3px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transition: all 0.4s;
-      -webkit-transition: all 0.4s;
-      -moz-transition: all 0.4s;
-    }
+// @mixin toggle-btn-style($toggleSize: 4rem, $toggleColor: #999) {
+//   display: block;
+//   width: $toggleSize;
+//   height: $toggleSize;
+//   color: #fff;
+//   background-color: $toggleColor;
+//   border-radius: 50%;
+//   cursor: pointer;
+//   z-index: 99;
+// }
+// #menuToggle--gNav {
+//   @include toggle-btn-style();
+//   position: fixed;
+//   bottom: 2rem;
+//   left: 2rem;
+//   @extend %toggleGnavBtn;
+//   @include MQ(laptop) {
+//     display: none;
+//   }
+// }
 
-    span:first-child {
-      -webkit-transform: translate(-50%, -$bar-margin);
-      -moz-transform: translate(-50%, -$bar-margin);
-      -ms-transform: translate(-50%, -$bar-margin);
-      -o-transform: translate(-50%, -$bar-margin);
-      transform: translate(-50%, -$bar-margin);
-    }
+// #menuToggle--pagetop {
+//   // @include toggle-btn-style();
+//   position: fixed;
+//   bottom: 2rem;
+//   right: 2rem;
+//   z-index: 99;
 
-    span:nth-child(2) {
-      -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-      transform: translateX(-50%);
-    }
+//   a {
+//     @include toggle-btn-style();
+//     position: relative;
+//     text-decoration: none;
+//     text-align: center;
 
-    span:last-child {
-      -webkit-transform: translate(-50%, $bar-margin);
-      -moz-transform: translate(-50%, $bar-margin);
-      -ms-transform: translate(-50%, $bar-margin);
-      -o-transform: translate(-50%, $bar-margin);
-      transform: translate(-50%, $bar-margin);
-    }
+//     &:before {
+//       @include icon-caret-up;
+//       position: absolute;
+//       top: 50%;
+//       left: 50%;
+//       transform: translate(-50%, -50%);
+//       margin: 0;
+//       font-size: 3rem !important;
+//       color: #fafafa;
+//     }
 
-    &.is-active {
-      // background-color: #DDDDDD;
-      //
-      // span {
-      //   background-color: #111;
-      // }
-    }
+//     span {
+//       display: none;
+//     }
+//   }
+//   @include MQ(laptop) {
+//     a {
+//       width: 4vw;
+//       height: 4vw;
 
-    &.is-active span:first-child {
-      // -webkit-transform: translateY(8px) rotate(45deg);
-      // -moz-transform: translateY(8px) rotate(45deg);
-      // -ms-transform: translateY(8px) rotate(45deg);
-      // transform: translateY(8px) rotate(45deg);
-      transform: translateX(-50%) translateY(0) rotate(45deg);
-    }
-
-    &.is-active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    &.is-active span:last-child {
-      transform: translateX(-50%) translateY(0) rotate(-45deg);
-    }
-  }
-}
-@mixin toggle-btn-style {
-  display: block;
-  width: $toggleSize;
-  height: $toggleSize;
-  color: #fff;
-  background-color: $toggleColor;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 99;
-}
-#menuToggle--gNav {
-  @include toggle-btn-style();
-  position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  @extend %toggleGnavBtn;
-  @include MQ(laptop) {
-    display: none;
-  }
-}
-
-#menuToggle--pagetop {
-  // @include toggle-btn-style();
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 99;
-
-  a {
-    @include toggle-btn-style();
-    position: relative;
-    text-decoration: none;
-    text-align: center;
-
-    &:before {
-      @include icon-caret-up;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      margin: 0;
-      font-size: 3rem !important;
-      color: #fafafa;
-    }
-
-    span {
-      display: none;
-    }
-  }
-  @include MQ(laptop) {
-    a {
-      width: 4vw;
-      height: 4vw;
-
-      &:before {
-        font-size: 2vw !important;
-      }
-    }
-  }
-}
+//       &:before {
+//         font-size: 2vw !important;
+//       }
+//     }
+//   }
+// }

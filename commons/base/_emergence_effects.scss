@@ -1,5 +1,281 @@
 @charset "UTF-8";
 
+@mixin effect-em-wipetext($dir: 'left', $duration: 0.2s) {
+  $selector: &;
+  position: relative;
+  transition: all $duration ease;
+  @if $dir == left {
+    -webkit-clip-path: inset(0 100% 0 0);
+    clip-path: inset(0 100% 0 0);
+  } @else if $dir == right {
+    -webkit-clip-path: inset(0 0 0 100%);
+    clip-path: inset(0 0 0 100%);
+  } @else if $dir == top {
+    -webkit-clip-path: inset(0 0 100% 0);
+    clip-path: inset(0 0 100% 0);
+  } @else if $dir == top-left {
+    -webkit-clip-path: inset(0 100% 100% 0);
+    clip-path: inset(0 100% 100% 0);
+  } @else if $dir == bottom {
+    -webkit-clip-path: inset(100% 0 0 0);
+    clip-path: inset(100% 0 0 0);
+  } @else if $dir == center {
+    -webkit-clip-path: inset(100%);
+    clip-path: inset(100%);
+  } @else if $dir == circle {
+    -webkit-clip-path: circle(0 at 50% 50%);
+    clip-path: circle(0 at 50% 50%);
+  } @else if $dir == skew {
+    -webkit-clip-path: polygon(0 0, 0 0, 0 0);
+    clip-path: polygon(0 0, 0 0, 0 0);
+  } @else if $dir == transform {
+    -webkit-clip-path: polygon(0 0, 0 0, 0 0);
+    clip-path: polygon(0 0, 0 0, 0 0);
+    transition: all 0.8s cubic-bezier(0.55, 0.06, 0.33, 1.85);
+    transform: translateX(-30px) scale(0.86) skew(8deg);
+  }
+
+  @at-root {
+    #{$selector}[data-emergence='visible'] {
+      @if $dir == left {
+        -webkit-clip-path: inset(0);
+        clip-path: inset(0);
+      } @else if $dir == right {
+        -webkit-clip-path: inset(0);
+        clip-path: inset(0);
+      } @else if $dir == top {
+        -webkit-clip-path: inset(0);
+        clip-path: inset(0);
+      } @else if $dir == top-left {
+        -webkit-clip-path: inset(0);
+        clip-path: inset(0);
+      } @else if $dir == bottom {
+        -webkit-clip-path: inset(0);
+        clip-path: inset(0);
+      } @else if $dir == center {
+        -webkit-clip-path: inset(0);
+        clip-path: inset(0);
+      } @else if $dir == circle {
+        -webkit-clip-path: circle(100% at 50% 50%);
+        clip-path: circle(100% at 50% 50%);
+      } @else if $dir == skew {
+        -webkit-clip-path: polygon(0 0, 200% 0, 0 200%);
+        clip-path: polygon(0 0, 200% 0, 0 200%);
+      } @else if $dir == transform {
+        -webkit-clip-path: polygon(0 0, 200% 0, 0 200%);
+        clip-path: polygon(0 0, 200% 0, 0 200%);
+        transform: translateX(0) scale(1) skew(0);
+      }
+    }
+  }
+}
+@mixin effect-em-fadein($duration: 0.75s, $delay: 0s) {
+  &[data-emergence='hidden'] {
+    transition: opacity $duration ease-out $delay;
+    opacity: 0;
+  }
+  &[data-emergence='visible'] {
+    transition: opacity $duration ease-out $delay;
+    opacity: 1;
+  }
+}
+
+@mixin effect-em-underline($color: #fff, $dir: left, $duration: 0.5s, $delay: 0.2s) {
+  $selector: &;
+
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  line-height: 1.2;
+  z-index: 1;
+
+  &::after {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 1rem;
+    background: $color;
+
+    transition: transform $duration;
+    transition-delay: $delay;
+    // opacity: 0.5;
+    z-index: -1;
+    @if $dir == bottom {
+      transform: scale(1, 0);
+      transform-origin: left bottom;
+    } @else {
+      transform: scale(0, 1);
+      transform-origin: left top;
+    }
+  }
+
+  &[data-emergence='visible'] {
+    &::after {
+      transform: scale(1, 1);
+    }
+  }
+}
+
+@mixin effect-em-imgmove($dir: 'left', $duration: 0.75s, $color: #333, $flash: false, $mode: 'self') {
+  /* imgの親要素の仕込む */
+  $selector: &;
+  transition: opacity $duration ease;
+
+  position: relative;
+  &:before {
+    background: $color;
+    bottom: 0;
+    content: '';
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+  }
+
+  @if $mode == 'self' {
+    &[data-emergence='visible'] {
+      opacity: 1;
+      overflow: hidden;
+      position: relative;
+      transition: opacity $duration ease;
+      -webkit-clip-path: inset(0);
+      clip-path: inset(0);
+    }
+
+    &[data-emergence='visible']:before {
+      @if $flash == true {
+        animation: img-wrap-flash $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      } @else {
+        animation: img-wrap $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+    }
+  } @else {
+    @at-root {
+      *[data-emergence='visible'] #{$selector} {
+        opacity: 1;
+        overflow: hidden;
+        position: relative;
+        transition: opacity $duration ease;
+        -webkit-clip-path: inset(0);
+        clip-path: inset(0);
+      }
+
+      *[data-emergence='visible'] #{$selector}:before {
+        @if $flash == true {
+          animation: img-wrap-flash $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        } @else {
+          animation: img-wrap $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+      }
+    }
+  }
+
+  @keyframes img-wrap {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes img-wrap-flash {
+    20% {
+      opacity: 0;
+    }
+    25% {
+      opacity: 1;
+    }
+    30% {
+      opacity: 0;
+    }
+    40% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
+
+@mixin effect-em-textblur($textColor: #fff, $blurColor: #ccc, $duration: 0.5s, $delay: 0s) {
+  &[data-emergence='hidden'] {
+    opacity: 0;
+  }
+  &[data-emergence='visible'] {
+    opacity: 0;
+    color: transparent;
+    animation: textblur $duration forwards ease-out;
+    -webkit-animation: textblur $duration forwards ease-out;
+    animation-delay: $delay;
+  }
+
+  @keyframes textblur {
+    0% {
+      text-shadow: 0 0 100px $blurColor;
+      opacity: 0;
+    }
+    50% {
+      text-shadow: 0 0 50px $blurColor;
+    }
+    100% {
+      text-shadow: 0 0 0px $blurColor;
+      opacity: 1;
+      color: $textColor;
+    }
+  }
+}
+@mixin effect-em-boxblur($textColor: #fff, $blurColor: #ccc, $duration: 0.5s, $delay: 0s) {
+  &[data-emergence='hidden'] {
+    opacity: 0;
+  }
+  &[data-emergence='visible'] {
+    opacity: 0;
+    animation: boxblur $duration forwards ease-out;
+    -webkit-animation: boxblur $duration forwards ease-out;
+    animation-delay: $delay;
+  }
+
+  @keyframes boxblur {
+    0% {
+      box-shadow: 0 0 100px $blurColor;
+      opacity: 0;
+    }
+    50% {
+      box-shadow: 0 0 50px $blurColor;
+    }
+    100% {
+      box-shadow: 0 0 0px $blurColor;
+      opacity: 1;
+    }
+  }
+}
+
+@mixin eff-line-self2($color: #fff, $dir: left, $duration: 5s, $delay: 2s) {
+  $selector: &;
+
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+
+  transition: transform $duration;
+  display: inline;
+  padding: 0 2px 4px;
+  background: linear-gradient(transparent 100%, #c86603 0%);
+
+  &[data-emergence='visible'] {
+    background: linear-gradient(transparent 70%, $color 0%);
+    // animation: underline $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes underline {
+    100% {
+      background: linear-gradient(transparent 70%, #ffdcb8 0%);
+    }
+  }
+}
+
+/* old */
 @mixin eff-text($dir: 'left', $duration: 0.2s) {
   $selector: &;
   position: relative;
@@ -71,7 +347,35 @@
     }
   }
 }
+@mixin eff-opacity($duration: 0.75s, $delay: 0s) {
+  &[data-emergence='hidden'] {
+    transition: opacity $duration ease-out $delay;
+    opacity: 0;
+  }
+  &[data-emergence='visible'] {
+    transition: opacity $duration ease-out $delay;
+    opacity: 1;
+  }
+}
 
+@mixin eff-opacity($duration: 0.75s, $delay: 0s) {
+  $selector: &;
+
+  @at-root {
+    [data-emergence='hidden'] {
+      #{$selector} {
+        transition: opacity $duration ease-out $delay;
+        opacity: 0;
+      }
+    }
+    [data-emergence='visible'] {
+      #{$selector} {
+        transition: opacity $duration ease-out $delay;
+        opacity: 1;
+      }
+    }
+  }
+}
 @mixin eff-paintmove($dir: 'left', $duration: 0.75s, $color: #fff, $flash: false) {
   /* imgの親要素の仕込む */
 
@@ -93,6 +397,7 @@
       top: 0;
       z-index: 1;
     }
+
     *[data-emergence='visible'] {
       #{$selector} {
         opacity: 1;
@@ -145,176 +450,3 @@
     }
   }
 }
-@mixin eff-opacity-self($duration: 0.75s, $delay: 0s) {
-  &[data-emergence='hidden'] {
-    transition: opacity $duration ease-out $delay;
-    opacity: 0;
-  }
-  &[data-emergence='visible'] {
-    transition: opacity $duration ease-out $delay;
-    opacity: 1;
-  }
-}
-@mixin eff-opacity($duration: 0.75s, $delay: 0s) {
-  $selector: &;
-
-  @at-root {
-    [data-emergence='hidden'] {
-      #{$selector} {
-        transition: opacity $duration ease-out $delay;
-        opacity: 0;
-      }
-    }
-    [data-emergence='visible'] {
-      #{$selector} {
-        transition: opacity $duration ease-out $delay;
-        opacity: 1;
-      }
-    }
-  }
-}
-@mixin eff-line-self($color: #fff, $dir: left, $duration: 0.5s, $delay: 0.2s) {
-  $selector: &;
-
-  position: relative;
-  display: inline-block;
-  text-decoration: none;
-  line-height: 1.2;
-  z-index: 1;
-
-  &::after {
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    content: '';
-    width: 100%;
-    height: 1rem;
-    background: $color;
-
-    transition: transform $duration;
-    transition-delay: $delay;
-    opacity: 0.5;
-    z-index: -1;
-    @if $dir == bottom {
-      transform: scale(1, 0);
-      transform-origin: left bottom;
-    } @else {
-      transform: scale(0, 1);
-      transform-origin: left top;
-    }
-  }
-
-  &[data-emergence='visible'] {
-    &::after {
-      transform: scale(1, 1);
-    }
-  }
-}
-@mixin eff-line-self2($color: #fff, $dir: left, $duration: 5s, $delay: 2s) {
-  $selector: &;
-
-  position: relative;
-  display: inline-block;
-  z-index: 1;
-
-  transition: transform $duration;
-  display: inline;
-  padding: 0 2px 4px;
-  background: linear-gradient(transparent 100%, #c86603 0%);
-
-  &[data-emergence='visible'] {
-    background: linear-gradient(transparent 70%, $color 0%);
-    // animation: underline $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
-  @keyframes underline {
-    100% {
-      background: linear-gradient(transparent 70%, #ffdcb8 0%);
-    }
-  }
-}
-@mixin eff-strong-bg-self($color: #fff, $dir: left, $duration: 1s, $delay: 2s) {
-  $selector: &;
-
-  position: relative;
-  display: inline-block;
-  text-decoration: none;
-  line-height: 1.2;
-  z-index: 1;
-
-  &::after {
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    content: '';
-    width: 100%;
-    height: 1rem;
-    background: $color;
-
-    transition: transform $duration;
-    transition-delay: $delay;
-    opacity: 0.5;
-    z-index: -1;
-    @if $dir == bottom {
-      transform: scale(1, 0);
-      transform-origin: left bottom;
-    } @else {
-      transform: scale(0, 1);
-      transform-origin: left top;
-    }
-  }
-
-  &[data-emergence='visible'] {
-    &::after {
-      transform: scale(1, 1);
-    }
-  }
-}
-// @mixin eff-line($color: #fff, $dir: left, $duration: 0.5s) {
-//   $selector: &;
-
-//   position: relative;
-//   display: inline-block;
-//   text-decoration: none;
-//   line-height: 1.2;
-//   z-index: 1;
-
-//   &::after {
-//     position: absolute;
-//     bottom: -4px;
-//     left: 0;
-//     content: '';
-//     width: 100%;
-//     height: 1rem;
-//     background: $color;
-
-//     transition: transform $duration;
-//     opacity: 0.5;
-//     z-index: -1;
-//     @if $dir == bottom {
-//       transform: scale(1, 0);
-//       transform-origin: left bottom;
-//     } @else {
-//       transform: scale(0, 1);
-//       transform-origin: left top;
-//     }
-//   }
-//   @at-root {
-//     [data-emergence='visible'] {
-//       #{$selector} {
-//         &::after {
-//           transform: scale(1, 1);
-//         }
-//       }
-//     }
-//   }
-// }
-// @mixin eff-self_opacity($duration: 0.75s) {
-//   &[data-emergence='hidden'] {
-//     transition: all $duration ease-out;
-//     opacity: 0;
-//   }
-//   &[data-emergence='visible'] {
-//     transition: all $duration ease-out;
-//     opacity: 1;
-//   }
-// }

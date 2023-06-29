@@ -11,6 +11,7 @@
    ========================================================================== */
 /* Default theme styles for the background */
 $remodalpadding: 1.5rem;
+$innerWidth: 110rem !default;
 
 .remodal-bg.remodal-is-opened,
 .remodal-bg.remodal-is-opening {
@@ -54,7 +55,7 @@ $remodalpadding: 1.5rem;
   color: #2b2e38;
   background: #fff;
   @include MQ(tablet) {
-    padding: $remodalpadding*2;
+    padding: $remodalpadding * 2;
   }
 }
 
@@ -268,7 +269,7 @@ $remodalpadding: 1.5rem;
    ========================================================================== */
 @media only screen and (min-width: 641px) {
   .remodal {
-    max-width: $innerWidth*.75;
+    max-width: $innerWidth * 0.75;
   }
 }
 /* IE8

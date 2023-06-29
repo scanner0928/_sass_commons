@@ -64,7 +64,7 @@ body {
   //   left: 0;
   //   width: 100%;
   //   height: 100%;
-  //   background-color: var(--navBgColor);
+  //   background-color: var(--navBg-color);
   //   // z-index: 80;
   //   .inner {
   //     width: 100%;
@@ -136,7 +136,7 @@ body {
   }
 
   #gNav {
-    background-color: var(--headerBgColor);
+    background-color: var(--headerBg-color);
     // background-color: $navBgColor;
     $selector: &;
     height: $siteNaviHeight-sp;
@@ -176,7 +176,7 @@ body {
     justify-content: center;
     // width: 100%;
     min-height: 100vh;
-    border-right: 1px solid var(--subcolor);
+    border-right: 1px solid var(--sub-color);
     background-color: var(--headerBgColor, #fff);
 
     position: sticky;

@@ -202,7 +202,7 @@ body {
   }
 
   #gNav {
-    background-color: var(--headerBgColor);
+    background-color: var(--headerBg-color);
     // background-color: $navBgColor;
     $selector: &;
     height: $siteNaviHeight-sp;
@@ -240,7 +240,7 @@ body {
     justify-content: center;
     // width: 100%;
     min-height: 100vh;
-    // color: var(--headercolor);
+    // color: var(--header-color);
     // background-color: var(--headerBgColor, #333);
     // border-right: 1px solid var(--bordercolor, #666);
     padding: 0 2rem;

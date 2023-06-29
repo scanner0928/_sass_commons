@@ -20,6 +20,7 @@
 
   & > * {
     grid-column: 2;
+    width: 100%;
   }
 
   & > .-full_nopadding {
@@ -43,7 +44,7 @@
     justify-self: flex-end;
   }
 }
-@mixin inner-grid-negative($padding: true) {
+@mixin inner-grid-negative($padding: false) {
   grid-column: 1 / 4 !important;
   justify-items: center;
   width: 100%;
@@ -53,7 +54,7 @@
     padding-right: var(--padding-h);
   }
 }
-@mixin inner-grid-negative-left($padding: true) {
+@mixin inner-grid-negative-left($padding: false) {
   grid-column: 1 / 3 !important;
   justify-items: flex-start;
   @if ($padding) {
@@ -62,7 +63,7 @@
     // padding: 0 calc((100% - var(--max_width)) / 2);
   }
 }
-@mixin inner-grid-negative-right($padding: true) {
+@mixin inner-grid-negative-right($padding: false) {
   grid-column: 2 / 4 !important;
   justify-items: flex-end;
   @if ($padding) {
@@ -230,7 +231,7 @@
   object-fit: cover;
   object-position: center center;
 }
-@mixin img-circle($width: 5px, $color: $bdrColor) {
+@mixin img-circle($width: 5px, $color: var(--border-color)) {
   img {
     border: $width solid $color;
     border-radius: 50%;
@@ -282,7 +283,7 @@
   }
   @content;
 }
-@mixin img-figcaption($color: #fff, $bgcolor: var(--maincolor)) {
+@mixin img-figcaption($color: #fff, $bgcolor: var(--main-color)) {
   display: inline-block;
   padding: 0.25em 0.5em;
   color: $color;
@@ -337,7 +338,7 @@
   display: inline;
 }
 /* title */
-@mixin title-border-side($color: $bdrColor, $center: true) {
+@mixin title-border-side($color: var(--border-color), $center: true, $size: 2px) {
   display: -webkit-flex;
   display: flex;
   -js-display: flex;
@@ -346,7 +347,7 @@
 
   &:after {
     content: '';
-    border-bottom: 1px solid $color;
+    border-bottom: $size solid $color;
     flex: 1 0 auto;
     -webkit-flex: 1 0 auto;
     transform: translateY(-50%);
@@ -354,7 +355,7 @@
   @if $center == true {
     &:before {
       content: '';
-      border-bottom: 1px solid $color;
+      border-bottom: $size solid $color;
       flex: 1 0 auto;
       -webkit-flex: 1 0 auto;
       transform: translateY(-50%);
@@ -594,7 +595,7 @@
   }
 }
 /* list */
-@mixin ul-list($style: 'caret-right', $color: var(--txtColor, #333)) {
+@mixin ul-list($style: 'caret-right', $color: var(--textColor, #333)) {
   position: relative;
   // padding-left: 2rem;
 
@@ -642,7 +643,7 @@
     counter-increment: number;
     content: counter(number);
     position: absolute;
-    background-color: var(--maincolor);
+    background-color: var(--main-color);
     color: #fff;
     border-radius: 50%;
     text-align: center;
@@ -698,12 +699,15 @@
 }
 
 /* icon */
-@mixin svgIcon($svg: false, $color: var(--txtColor, #333)) {
+@mixin svgIcon($svg: false, $color: var(--textColor, #333)) {
   @if ($svg) {
+    display: inline-block;
+    width: 1em;
+    height: 1.2em;
     content: '';
     background-color: $color;
     transition: background-color 0.4s;
-    vertical-align: middle;
+    vertical-align: sub;
     mask-size: contain;
     mask-repeat: no-repeat;
     mask-position: center center;

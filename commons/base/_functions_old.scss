@@ -239,7 +239,7 @@
   text-shadow: 0 2px 1px $color;
 }
 /* img */
-@mixin img-circle($width: 5px, $color: $bdrColor) {
+@mixin img-circle($width: 5px, $color: var(--border-color)) {
   img {
     border: $width solid $color;
     border-radius: 50%;
@@ -277,7 +277,7 @@
   }
   @content;
 }
-@mixin img-figcaption($color: #fff, $bgcolor: $mainColor) {
+@mixin img-figcaption($color: #fff, $bgcolor: $main-color) {
   display: inline-block;
   padding: 0.25em 0.5em;
   color: $color;
@@ -332,7 +332,7 @@
   display: inline-block;
 }
 /* title */
-@mixin title-border-side($color: $bdrColor, $center: true) {
+@mixin title-border-side($color: var(--border-color), $center: true) {
   display: -webkit-flex;
   display: flex;
   -js-display: flex;
@@ -563,7 +563,7 @@
   justify-content: center;
 }
 /* nav */
-@mixin menu-sideborders($height: 50%, $color: $bdrColor) {
+@mixin menu-sideborders($height: 50%, $color: var(--border-color)) {
   position: relative;
 
   &:after,
