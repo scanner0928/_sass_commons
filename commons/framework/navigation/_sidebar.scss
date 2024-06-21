@@ -4,233 +4,89 @@ $coffin: '#coffin' !default;
 $siteNavi: '#siteNavi' !default;
 $siteHeader: '#siteHeader' !default;
 $siteFooter: '#siteFooter' !default;
-$fiexdFooter: '#siteBottomFixed' !default;
-$siteMainBody: '#siteMainBody' !default;
 $siteContents: '#siteContents' !default;
 
-$siteHeaderWidth: 25rem !default;
-$siteHeaderColor: #333 !default;
-
-$siteNaviHeight-sp: 7vh !default;
-
 :root {
-  --gnavIconColor: #ccc;
-  --gnavIconBgColor: #f0f0f0;
-}
-body {
-  max-width: 1920px;
-  margin: auto;
-  box-shadow: 1px 1px 4px 2px #000;
+  --sidebar-width: 28rem;
+  --sidebar-padding: calc(var(--padding-h) / 2);
 }
 
 #coffin {
+  display: -webkit-flex;
+  display: flex;
+  -js-display: flex;
   min-height: 100vh;
-  @include MQ(lower-tablet) {
-    display: -webkit-flex;
-    display: flex;
-    -js-display: flex;
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    #{$siteMainBody} {
-      flex: 1;
-      -webkit-flex: 1;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  /* sidebar setting */
+  @include MQ(laptop) {
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    padding-left: var(--sidebar-width);
+
+    #{$siteHeader} {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      .inner {
+        // position: sticky;
+        // top: 0;
+        padding: 0 var(--sidebar-padding);
+        min-height: 100vh;
+        display: -webkit-flex;
+        display: flex;
+        -js-display: flex;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        -webkit-justify-content: center;
+        justify-content: center;
+      }
     }
   }
 }
-
 #{$siteHeader} {
-  @include MQ(lower-tablet) {
-    padding: 0.5rem 0;
-    @include inner-grid();
-  }
+  position: relative;
+  padding: 1em 0;
+  color: var(--header-color-text);
+  background-color: var(--header-color-bg);
+  z-index: 10;
 }
 
-#{$siteFooter} {
-  @include inner-grid();
-  @include padding-vertical();
-  text-align: center;
-  color: var(--footerColor, #f0f0f0);
-  background-color: var(--footerBgColor, #111);
-}
-
-#{$siteMainBody} {
+#{$siteContents} {
+  flex: 1;
+  -webkit-flex: 1;
   display: -webkit-flex;
   display: flex;
   -js-display: flex;
   -webkit-flex-direction: column;
   flex-direction: column;
-  min-height: 100vh;
-  #{$siteContents} {
+  #pageContents {
     flex: 1;
     -webkit-flex: 1;
   }
 
-  // #{$siteFooter} {
-  //   position: sticky;
-  //   bottom: 0;
-  // }
+  .inner {
+    @include inner-grid();
+  }
 }
 
-#gNav {
-  width: 100%;
-  list-style: none;
+/* nav */
 
+#{$siteNavi} {
   @include MQ(lower-tablet) {
-    display: -webkit-flex;
-    display: flex;
-    -js-display: flex;
-    & > * {
-      flex: 1;
-      -webkit-flex: 1;
-      position: relative;
-      &:not(:first-child) {
-        @include menu-sideborders();
-        // border-left: 1px solid lighten($navBgColor, 5%);
-      }
-    }
-  }
-  a {
-    // text-align: center;
-    display: block;
-
-    // color: var(--gnavcolor, #fff);
-    font-weight: bold;
-    // font-size: 80%;
-    @include MQ(lower-tablet) {
-      padding-top: 2.5vw;
-    }
-    .ja {
-      font-weight: bold;
-      font-size: 80%;
-      @include MQ(lower-tablet) {
-        padding-top: 2.5vw;
-      }
-    }
-    @include MQ(laptop) {
-      // padding: 1em;
-      padding: 1em 0.5em;
-    }
-    &:before {
-      display: block;
-      width: 10vw;
-      height: 10vw;
-      line-height: 10vw !important;
-      text-align: center;
-      font-size: 80%;
-      color: var(--gnavIconColor, lighten($headerBgColor, 5%));
-      background-color: var(--gnavIconBgColor, darken($headerBgColor, 10%));
-      border: 2px solid var(--gnavIconColor, lighten($headerBgColor, 5%));
-      border-radius: 50%;
-
-      @include MQ(lower-tablet) {
-        position: absolute;
-        top: 0%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 110%;
-      }
-      @include MQ(tablet) {
-        width: 5rem;
-        height: 5rem;
-        line-height: 5rem !important;
-      }
-      @include MQ(laptop) {
-        width: 3rem;
-        height: 3rem;
-        line-height: 3rem !important;
-        vertical-align: inherit;
-        margin-right: 1rem !important;
-      }
-    }
-  }
-  .home {
-    a {
-      &:before {
-        @include icon-home();
-      }
-    }
-  }
-  .features {
-    a {
-      &:before {
-        @include icon-lightbulb();
-      }
-    }
-  }
-  .menu {
-    a {
-      &:before {
-        @include icon-book-open();
-      }
-    }
-  }
-  .access {
-    a {
-      &:before {
-        @include icon-map-marker-alt();
-      }
-    }
-  }
-}
-@include MQ(lower-tablet) {
-  #{$siteHeader} {
     position: fixed;
-    z-index: 99;
-    // width: 40vw;
-    // max-width: 16rem;
-    // position: sticky;
-    // top: 0;
-    // z-index: 99;
-    .logo {
-      width: 40vw;
-      max-width: 10rem;
-      padding: 1rem 0;
-    }
-  }
-  #{$siteNavi} {
-    position: fixed;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
-    z-index: 999;
-    .inner {
-      padding: 0;
-    }
-  }
-  #{$siteMainBody} {
-    padding-bottom: $siteNaviHeight-sp;
-  }
-
-  #gNav {
-    background-color: var(--headerBg-color);
-    // background-color: $navBgColor;
-    $selector: &;
-    height: $siteNaviHeight-sp;
-
-    a {
-      display: grid;
-      place-items: center;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
-
-@include MQ(laptop) {
-  #{$coffin} {
-    display: -webkit-flex;
-    display: flex;
-    -js-display: flex;
-    -webkit-align-items: flex-start;
-    align-items: flex-start;
-  }
-
-  #{$siteHeader} {
-    width: 12%;
-    min-width: $siteHeaderWidth;
+    height: 100%;
+    background-color: var(--siteNavi-color-bg, #111);
+    transition: all 0.25s ease-out;
+    visibility: hidden;
+    z-index: -1;
+    opacity: 0;
+    padding: 0 calc(var(--padding-h) * 2);
     display: -webkit-flex;
     display: flex;
     -js-display: flex;
@@ -238,26 +94,254 @@ body {
     flex-direction: column;
     -webkit-justify-content: center;
     justify-content: center;
-    // width: 100%;
-    min-height: 100vh;
-    // color: var(--header-color);
-    // background-color: var(--headerBgColor, #333);
-    // border-right: 1px solid var(--bordercolor, #666);
-    padding: 0 2rem;
 
-    position: sticky;
-    top: 0;
-    @include padding-vertical($ratio: 0.1);
-    & > .inner {
-      padding: 0 2.5vw;
+    &.is-active {
+      visibility: inherit;
+      opacity: 1;
+      z-index: 99;
     }
   }
-  #{$siteMainBody} {
-    flex: 1;
-    -webkit-flex: 1;
+}
+
+#gNav {
+  width: 100%;
+  & > ul {
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #000;
+    & > li {
+      position: relative;
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #444;
+    }
+  }
+  a {
+    display: block;
+    padding: 1em 0;
+    font-weight: bold;
+    font-size: 90%;
+    text-shadow: 1px 1px 2px #111;
+  }
+  .sub-menu {
+    li {
+      position: relative;
+    }
   }
 
-  #{$siteNavi} {
+  @include MQ(lower-tablet) {
+    & > ul {
+      & > li {
+        & > a {
+          &:before {
+            margin-right: 0.5em;
+            @include svgIcon('<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 256 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>', $color: var(--gNav-color-icon, #fff));
+          }
+        }
+      }
+    }
+    .sub-menu {
+      margin-left: 2em;
+      li:not(:last-child) {
+        border-bottom: 1px solid #666;
+      }
+      a {
+        font-weight: normal;
+        padding: 0.75em 0;
+      }
+    }
+  }
+  @include MQ(laptop) {
+    .sub-menu {
+      display: none;
+      position: absolute;
+      top: -0.25rem;
+      left: 100%;
+      min-width: 250px;
+      margin: 0;
+      padding: 0 0 0 var(--sidebar-padding);
+      z-index: 90;
+      & > li {
+        position: relative;
+        border-bottom: 1px solid #222;
+        background-color: #fff;
+        a {
+          position: relative;
+          z-index: 1;
+          &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: -1;
+            background-color: var(--gNav-subMenu-color-bg, var(--header-color-bg));
+            opacity: 0.8;
+          }
+        }
+      }
+      @include MQ(laptop) {
+        li:hover {
+          &:before {
+            opacity: 0.9;
+          }
+        }
+        a {
+          padding-left: 1em;
+        }
+      }
+    }
+  }
+}
+
+#sNav {
+  margin-top: 10vh;
+  @include MQ(laptop) {
     margin-top: 5vh;
+  }
+  a {
+    display: block;
+    padding: 0.5em 0;
+    &:before {
+      @include svgIcon('<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>', $color: var(--sNav-color-icon, #c0c0c0));
+      margin-right: 0.5em;
+      transform: scale(0.6);
+      vertical-align: top;
+    }
+  }
+}
+#fNav {
+  & > ul {
+    font-weight: bold;
+    & > li {
+      & > a {
+        text-decoration: underline;
+        &:before {
+          margin-right: 0.5em;
+          @include svgIcon('<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 256 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>', $color: var(--fNav-color-icon, #fff));
+        }
+      }
+    }
+    @include MQ(lower-tablet) {
+      & > li {
+        &:not(:first-child) {
+          margin-top: 2em;
+        }
+      }
+    }
+    @include MQ(laptop) {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -js-display: flex;
+      -webkit-justify-content: space-between;
+      justify-content: space-between;
+      & > li {
+        width: 45%;
+        margin: 0 0 1em;
+      }
+    }
+  }
+
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .sub-menu {
+    margin: 1em 0 0;
+    padding-left: 1.5em;
+    font-weight: normal;
+    li {
+      margin: 0 0 0.75em;
+    }
+  }
+}
+/* footer */
+#{$siteFooter} {
+  --left_bg: #1b1b1b;
+  --right_bg: #2f2f2f;
+  color: var(--footer-color-text);
+  background-color: var(--footer-color-bg);
+  font-size: 85%;
+  .site_credit {
+    background-color: var(--left_bg);
+    padding: 5vh var(--padding-h);
+  }
+  nav {
+    padding: 5vh var(--padding-h);
+    background-color: var(--right_bg);
+  }
+  @include MQ(laptop) {
+    color: #f0f0f0;
+    background: linear-gradient(90deg, var(--left_bg) 0%, var(--left_bg) 50%, var(--right_bg) 50%, var(--right_bg) 100%);
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -js-display: flex;
+    .site_credit {
+      width: 40%;
+      max-width: calc(var(--inner-maxWidth) * 0.4);
+      padding: 6vw 4vw 6vw var(--padding-h);
+    }
+    nav {
+      width: 60%;
+      max-width: calc(var(--inner-maxWidth) * 0.6);
+      padding: 6vw var(--padding-h) 6vw 60px;
+    }
+  }
+}
+
+#controls {
+  position: fixed;
+  bottom: 5vw;
+  left: 5vw;
+  z-index: 99;
+  @include MQ(tablet) {
+    bottom: 3rem;
+    left: 3rem;
+  }
+  @include MQ(laptop) {
+    display: none;
+  }
+}
+#toggle-siteNavi {
+  --toggleSize: 15vw;
+  @include MQ(tablet) {
+    --toggleSize: 7rem;
+  }
+  // --toggleSize: 15vw;
+  display: block;
+  width: var(--toggleSize);
+  height: var(--toggleSize);
+  background-color: var(--toggle-color-bg, #111);
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  // box-shadow: 0 1px 1px 0 #111;
+  border: 3px solid var(--toggle-color-border, #fafafa);
+  &:before {
+    display: block;
+    width: calc(var(--toggleSize) * 0.5);
+    height: calc(var(--toggleSize) * 0.5);
+    @include svgIcon(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>',
+      $color: var(--toggle-color-text, #fff)
+    );
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &.is-active {
+    &:before {
+      @include svgIcon(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>',
+        $color: var(--toggle-color-text, #fff)
+      );
+    }
   }
 }

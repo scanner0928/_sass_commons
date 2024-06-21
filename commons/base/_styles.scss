@@ -9,18 +9,21 @@
   flex-direction: column;
   @include margin-vertical($bottom: false, $ratio: 0.25);
   & > * {
-    &:not(:first-child) {
-      margin: 1em 0 0;
+    &:first-child {
+      margin-top: 0;
     }
   }
 }
 @mixin btn($align: 'center') {
   display: block;
+  @include MQ(lower-tablet) {
+    margin-top: 2rem;
+  }
   a {
     display: block;
     padding: 1em 2em;
-    color: var(--btnColor-text, #222);
-    background-color: var(--btnColor, #666);
+    color: var(--btn-color-text, #222);
+    background-color: var(--btn-color, #666);
     // font-size: 95%;
     font-weight: bold;
     line-height: 1;
@@ -34,7 +37,7 @@
       content: '';
       height: 1em;
       width: 1em;
-      background-color: var(--btnColor-text);
+      background-color: var(--btn-color-text);
       transition: background-color 0.4s;
       vertical-align: middle;
       margin-right: 0.5em;
@@ -131,7 +134,7 @@
       position: absolute;
       top: 0.1em;
       left: 0.5em;
-      color: var(--subColor, #333);
+      color: var(--sub-color, #333);
       @include svgIcon();
     }
   }
@@ -208,65 +211,3 @@
     color: #843534;
   }
 }
-/* menu toggle */
-
-// @mixin toggle-btn-style($toggleSize: 4rem, $toggleColor: #999) {
-//   display: block;
-//   width: $toggleSize;
-//   height: $toggleSize;
-//   color: #fff;
-//   background-color: $toggleColor;
-//   border-radius: 50%;
-//   cursor: pointer;
-//   z-index: 99;
-// }
-// #menuToggle--gNav {
-//   @include toggle-btn-style();
-//   position: fixed;
-//   bottom: 2rem;
-//   left: 2rem;
-//   @extend %toggleGnavBtn;
-//   @include MQ(laptop) {
-//     display: none;
-//   }
-// }
-
-// #menuToggle--pagetop {
-//   // @include toggle-btn-style();
-//   position: fixed;
-//   bottom: 2rem;
-//   right: 2rem;
-//   z-index: 99;
-
-//   a {
-//     @include toggle-btn-style();
-//     position: relative;
-//     text-decoration: none;
-//     text-align: center;
-
-//     &:before {
-//       @include icon-caret-up;
-//       position: absolute;
-//       top: 50%;
-//       left: 50%;
-//       transform: translate(-50%, -50%);
-//       margin: 0;
-//       font-size: 3rem !important;
-//       color: #fafafa;
-//     }
-
-//     span {
-//       display: none;
-//     }
-//   }
-//   @include MQ(laptop) {
-//     a {
-//       width: 4vw;
-//       height: 4vw;
-
-//       &:before {
-//         font-size: 2vw !important;
-//       }
-//     }
-//   }
-// }

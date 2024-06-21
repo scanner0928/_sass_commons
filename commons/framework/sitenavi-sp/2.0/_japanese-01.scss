@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+#{$siteNavi} {
+  @include MQ(lower-tablet) {
+    .gNav {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      width: 100%;
+      gap: 1em;
+      order: 3;
+      font-size: 120%;
+    }
+    .lNav {
+      order: 1;
+      ul {
+        display: -webkit-flex;
+        display: flex;
+        -js-display: flex;
+      }
+    }
+    .sNav {
+      order: 2;
+    }
+    & > * {
+      margin: 3rem 0;
+    }
+  }
+}

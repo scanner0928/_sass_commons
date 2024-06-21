@@ -1,0 +1,121 @@
+@charset "utf-8";
+
+$coffin: '#coffin' !default;
+$siteNavi: '#siteNavi' !default;
+$siteHeader: '#siteHeader' !default;
+$siteFooter: '#siteFooter' !default;
+$fiexdFooter: '#siteBottomFixed' !default;
+$siteMainBody: '#siteMainBody' !default;
+$siteContents: '#siteContents' !default;
+
+:root {
+  --header-width: 25rem;
+  --gnavIconColor: #ccc;
+  --gnavIconBgColor: #f0f0f0;
+}
+body {
+  @include MQ(laptop) {
+    padding-left: var(--header-width);
+  }
+}
+
+#{$siteHeader} {
+  color: var(--header-color-text);
+  background-color: var(--header-color-bg);
+}
+.gNav {
+  @include MQ(lower-tablet) {
+    --gnavIconColor: #666;
+    --gnavIconBgColor: #000;
+    --gnavIconBdrColor: #333;
+
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    & > * {
+      flex: 1;
+      -webkit-flex: 1;
+      position: relative;
+      &:not(:first-child) {
+        @include menu-sideborders();
+      }
+    }
+  }
+  a {
+    display: block;
+    color: var(--gnavcolor, #f0f0f0);
+    font-weight: bold;
+    // text-align: center;
+    padding: 0.5em 0;
+
+    span {
+      display: block;
+      font-size: 70%;
+      opacity: 0.7;
+    }
+  }
+}
+@include MQ(lower-tablet) {
+  #{$siteHeader} {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    padding: 1rem 0;
+    @include inner-grid();
+    .logo {
+      display: block;
+      width: 40vw;
+      max-width: 25rem;
+    }
+  }
+}
+
+@include MQ(laptop) {
+  #{$siteHeader} {
+    width: 20%;
+    max-width: var(--header-width, 25rem);
+    min-height: 100vh;
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    padding: 0 2rem;
+    padding-top: 20vh;
+    padding-bottom: 5vh;
+  }
+
+  #{$siteNavi} {
+    flex: 1;
+    -webkit-flex: 1;
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    margin-top: 10vh;
+  }
+  .gNav {
+    flex: 1;
+    -webkit-flex: 1;
+    ul {
+      -webkit-flex-direction: column;
+      flex-direction: column;
+    }
+  }
+  .sNav,
+  .lNav {
+    margin-top: auto;
+  }
+}
+#siteNavi-credit {
+  @include MQ(laptop) {
+    display: none;
+  }
+}

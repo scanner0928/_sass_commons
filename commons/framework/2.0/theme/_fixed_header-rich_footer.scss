@@ -1,0 +1,257 @@
+@charset "UTF-8";
+:root {
+  @include MQ(tablet) {
+    --header-logo-maxWidth: 20rem;
+  }
+}
+.home {
+  #{$siteHeader} {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+}
+.homeHeader {
+  position: relative;
+  height: var(--homeHeader-height, 85vh);
+  @include MQ(laptop) {
+    height: 100vh;
+  }
+  z-index: 1;
+  background-color: var(--homeHeader-color-bg, #000);
+  &-images,
+  &-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  &-image {
+    opacity: var(--homeHeader-image-opacity, 0.3);
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  &-news {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    padding: 3vh var(--padding-h);
+    font-size: 85%;
+    color: var(--homeHeader-news-color, #fff);
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--homeHeader-news-color-bg, #000);
+      opacity: 0.3;
+      z-index: -1;
+    }
+    &-title {
+      width: 30%;
+      font-size: 120%;
+      span {
+        display: block;
+        font-size: 65%;
+        opacity: 0.7;
+        margin-top: 0.5em;
+      }
+    }
+    &-body {
+      flex: 1;
+      -webkit-flex: 1;
+    }
+    --padding-right: 5vw;
+    // @include MQ(lower-tablet) {
+    //   --padding-right: 12vw;
+    // }
+    padding-right: var(--padding-right);
+    .gotoArchive {
+      --text-color: var(--homeHeader-news-color-icon, #fff);
+      position: relative;
+      width: var(--padding-right);
+      &:before {
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        margin-right: 0;
+        font-size: calc(var(--padding-right) * 0.3);
+        opacity: 0.5;
+        @include svgIcon(
+          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM294.6 135.1l99.9 107.1c3.5 3.8 5.5 8.7 5.5 13.8s-2 10.1-5.5 13.8L294.6 376.9c-4.2 4.5-10.1 7.1-16.3 7.1C266 384 256 374 256 361.7l0-57.7-96 0c-17.7 0-32-14.3-32-32l0-32c0-17.7 14.3-32 32-32l96 0 0-57.7c0-12.3 10-22.3 22.3-22.3c6.2 0 12.1 2.6 16.3 7.1z"/></svg>'
+        );
+        @include MQ(sp-only) {
+          width: 2rem;
+          height: 2.2rem;
+        }
+      }
+    }
+  }
+}
+
+.newsList {
+  dt {
+    font-size: 75%;
+    font-weight: bold;
+  }
+  dd {
+    a {
+      display: block;
+      padding: 0.5em 0;
+      color: #fff;
+    }
+  }
+}
+*:not(#siteContents) {
+  a {
+    text-decoration: none;
+  }
+}
+#{$siteHeader} {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 99;
+  padding: 2rem var(--padding-h);
+  transition: all 0.5s ease-out;
+
+  &:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--header-color-bg, #000);
+    opacity: 0;
+    transition: all 0.5s ease-out;
+  }
+  .--scrolled & {
+    padding-top: var(--header-scrolled-padding-v, 2rem);
+    padding-bottom: var(--header-scrolled-padding-v, 2rem);
+    &:after {
+      opacity: var(--scrolled-header-opacity, 0.8);
+    }
+    @include MQ(sp-only) {
+      --header-scrolled-padding-v: 1rem;
+    }
+    nav {
+      a {
+        color: var(--scrolled-nav-color-link, #fff);
+      }
+    }
+  }
+  &-logo {
+    display: block;
+    margin-right: auto;
+    max-width: var(--header-logo-maxWidth, 14rem);
+  }
+  @include MQ(laptop) {
+    // position: relative;
+    padding: 5vh var(--padding-h);
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+  }
+}
+
+#{$siteContents} {
+}
+#{$siteNavi} {
+  @include MQ(lower-tablet) {
+    .gNav {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      width: 100%;
+      gap: 1em;
+      order: 3;
+      font-size: 120%;
+    }
+    .lNav {
+      order: 1;
+    }
+    .sNav {
+      order: 2;
+    }
+    & > * {
+      margin: 3rem 0;
+    }
+  }
+  @include MQ(laptop) {
+    position: relative;
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    .gNav {
+      a {
+        padding: 0 1em;
+      }
+    }
+
+    .sNav {
+      display: none;
+    }
+    &-credit {
+      display: none;
+    }
+  }
+}
+nav {
+  @include MQ(laptop) {
+    ul {
+      display: -webkit-flex;
+      display: flex;
+      -js-display: flex;
+    }
+  }
+}
+#gNav,
+#sNav {
+  ul {
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+  }
+}
+
+.gNav {
+  a {
+    display: block;
+    color: var(--header-gnav-color-text, #fff);
+    transition: all 0.25s ease-out;
+    padding: 0.5em 0;
+    span {
+      transition: all 0.25s ease-out;
+    }
+    & > .-main {
+      font-size: 120%;
+    }
+    & > .-sub {
+      display: block;
+      font-size: 65%;
+      opacity: 0.7;
+      // margin-top: 0.5em;
+    }
+    &:hover {
+      // transform: scale(1.1);
+      .-main {
+        color: var(--main-color);
+      }
+    }
+  }
+}

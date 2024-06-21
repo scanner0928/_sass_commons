@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+#{$siteFooter} {
+  --padding-v: 5vh;
+  padding: var(--padding-v) var(--padding-h);
+  color: var(--footer-color-text);
+  background-color: var(--footer-color-bg);
+  &-logo {
+    width: 30%;
+    max-width: 45vw;
+  }
+  @include MQ(laptop) {
+    --padding-v: 10vh;
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    &-logo {
+      width: var(--siteFooter-logo-width-pc, 25rem);
+    }
+  }
+  &-navigation {
+    @include MQ(lower-tablet) {
+      padding-bottom: var(--padding-v);
+    }
+    display: grid;
+    grid-template:
+      'lnav gnav' auto
+      'snav  gnav' 1fr
+      / auto 1fr;
+    gap: 1em 2em;
+    @include MQ(laptop) {
+      gap: 1em 10em;
+    }
+
+    .gNav {
+      grid-area: gnav;
+      ul {
+        li {
+          &:not(:first-child) {
+            margin-left: 2em;
+          }
+        }
+        a {
+          text-align: right;
+          padding: 0.5em 0;
+          margin-top: -0.5em;
+        }
+
+        &.--column {
+          -webkit-flex-direction: column;
+          flex-direction: column;
+          li {
+            &:not(:first-child) {
+              margin-top: 0.5em;
+            }
+          }
+        }
+      }
+    }
+  }
+  &-credit {
+    @include MQ(lower-tablet) {
+      padding-top: var(--padding-v);
+      border-top: 1px solid var(--border-color, #666);
+    }
+  }
+}
+
+.footerAddress {
+  font-size: 85%;
+  font-style: normal;
+  @include margin-vertical($ratio: 0.25);
+  &-address {
+  }
+  &-tel {
+    font-size: 1.75em;
+    color: var(--footer-color-link, #333);
+    margin: 0;
+  }
+  a {
+    color: var(--footer-color-link, #333);
+    text-decoration: none;
+  }
+}
+.footerOpentime {
+  font-size: 85%;
+}
+.footer {
+  &-title {
+    font-size: 120%;
+    margin: 0 0 0.5em;
+  }
+  &-detail {
+    div {
+      display: -webkit-flex;
+      display: flex;
+      -js-display: flex;
+    }
+    dt:after {
+      content: ':';
+      margin: 0 0.5em;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+@charset "UTF-8";
+.snss {
+  margin: 2em 0 0;
+  & > * {
+    display: inline-block;
+    &:not(:first-child) {
+      margin-left: 0.5em;
+    }
+  }
+  svg,
+  img[src$='svg'] {
+    width: var(--snss-icon-width, 1.5em);
+  }
+}

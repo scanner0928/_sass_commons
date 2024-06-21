@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+#{$siteNavi} {
+  @include MQ(laptop) {
+    &-credit {
+      display: none;
+    }
+  }
+}

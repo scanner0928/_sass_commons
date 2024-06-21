@@ -54,8 +54,9 @@ a:not([class]) {
 img {
   max-width: 100%;
   height: auto;
-  display: block;
+  display: inline-block;
 }
+
 /* Natural flow and rhythm in articles by default */
 /* article要素内の要素に自然な流れとリズムを定義 */
 article > * + * {

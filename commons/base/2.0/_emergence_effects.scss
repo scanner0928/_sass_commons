@@ -1,0 +1,142 @@
+@charset "UTF-8";
+
+@mixin em-fadein($duration: 0.75s, $delay: 0.5s) {
+  transition: opacity $duration ease-out $delay;
+  &[data-emergence='hidden'] {
+    opacity: 0;
+  }
+  &[data-emergence='visible'] {
+    opacity: 1;
+  }
+}
+@mixin em-blurin($duration: 0.5s, $delay: 0.5s, $start_blur: '10px', $start_opacity: 0.25) {
+  backface-visibility: hidden;
+  transition: opacity $duration $delay, filter $duration $delay;
+  &[data-emergence='hidden'] {
+    filter: blur(#{$start_blur});
+    opacity: $start_opacity;
+  }
+  &[data-emergence='visible'] {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@mixin em-paintmove($duration: 0.75s, $color: #ccc, $flash: true, $keyboard: false) {
+  $selector: &;
+
+  position: relative;
+  overflow: hidden;
+
+  #{$selector}[data-emergence='hidden'] {
+    opacity: 0;
+  }
+  @at-root {
+    #{$selector}:before {
+      background: $color;
+      bottom: 0;
+      left: -1px;
+      pointer-events: none;
+      position: absolute;
+      right: -1px;
+      top: 0;
+      z-index: 1;
+    }
+    #{$selector}[data-emergence] {
+      &:before {
+        content: '';
+      }
+    }
+    #{$selector}[data-emergence='hidden'] {
+      opacity: 0;
+    }
+    #{$selector}[data-emergence='visible'] {
+      opacity: 1;
+
+      &:before {
+        @if $flash == true {
+          animation: img-wrap-flash $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        } @else {
+          animation: img-wrap $duration cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+      }
+    }
+    @if $keyboard {
+      #{$selector}[data-emergence='hidden'] {
+        -webkit-clip-path: inset(0 100% 0 0);
+        clip-path: inset(0 100% 0 0);
+        opacity: 1;
+      }
+      #{$selector}[data-emergence='visible'] {
+        -webkit-clip-path: inset(0);
+        clip-path: inset(0);
+      }
+    }
+  }
+  @keyframes img-wrap {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes img-wrap-flash {
+    20% {
+      opacity: 0;
+    }
+    25% {
+      opacity: 1;
+    }
+    30% {
+      opacity: 0;
+    }
+    40% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
+
+/* text */
+
+@mixin em-underline($color: #fff, $dir: left, $duration: 0.5s, $delay: 0.2s) {
+  $selector: &;
+
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  line-height: 1.2;
+  z-index: 1;
+
+  &::after {
+    position: absolute;
+    // bottom: -4px;
+    bottom: -0.3em;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 0.5rem;
+    background: $color;
+
+    transition: transform $duration;
+    transition-delay: $delay;
+    // opacity: 0.5;
+    z-index: -1;
+    @if $dir == bottom {
+      transform: scale(1, 0);
+      transform-origin: left bottom;
+    } @else {
+      transform: scale(0, 1);
+      transform-origin: left top;
+    }
+  }
+
+  &[data-emergence='visible'] {
+    &::after {
+      transform: scale(1, 1);
+    }
+  }
+}
+
+/* effect */

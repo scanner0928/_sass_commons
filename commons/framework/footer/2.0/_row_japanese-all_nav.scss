@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+:root {
+  --footer-logo-width: 30%;
+  --footer-logo-maxwidth: 45vw;
+  --footer-logo-width-pc: 25rem;
+}
+
+#{$siteFooter} {
+  --padding-v: 5vh;
+  padding: var(--padding-v) var(--padding-h);
+  color: var(--footer-color-text);
+  background-color: var(--footer-color-bg);
+  &-logo {
+    width: var(--footer-logo-width);
+    max-width: var(--footer-logo-maxwidth);
+  }
+  @include MQ(laptop) {
+    --padding-v: 10vh;
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    &-logo {
+      width: var(--footer-logo-width-pc);
+    }
+  }
+  &-navigation {
+    @include MQ(lower-tablet) {
+      padding-bottom: var(--padding-v);
+    }
+    display: grid;
+    grid-template:
+      'lnav gnav' auto
+      'snav  gnav' 1fr
+      / auto 1fr;
+    gap: 1em 2em;
+    @include MQ(laptop) {
+      gap: 1em 10em;
+    }
+
+    .gNav {
+      grid-area: gnav;
+      ul {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        li {
+          &:not(:first-child) {
+            margin-top: 0.5em;
+          }
+        }
+        a {
+          text-align: right;
+          padding: 0.5em 0;
+          margin-top: -0.5em;
+        }
+      }
+    }
+    .lNav {
+      ul {
+        display: -webkit-flex;
+        display: flex;
+        -js-display: flex;
+      }
+    }
+  }
+  &-credit {
+    @include MQ(lower-tablet) {
+      padding-top: var(--padding-v);
+      border-top: 1px solid var(--border-color, #666);
+    }
+  }
+}
+
+.shopInfo {
+  font-size: 85%;
+  font-style: normal;
+  @include margin-vertical($ratio: 0.25);
+  &-address {
+  }
+  &-tel {
+    font-size: 1.75em;
+    color: #fff;
+    margin: 0;
+    a {
+      display: block;
+      span {
+        font-size: 75%;
+      }
+    }
+  }
+  &-detail {
+    div {
+      display: -webkit-flex;
+      display: flex;
+      -js-display: flex;
+    }
+    dt:after {
+      content: ':';
+      margin: 0 0.5em;
+    }
+  }
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+}
+.shopOpentime {
+  font-size: 85%;
+  &-title {
+    font-size: 120%;
+    margin: 0 0 0.5em;
+  }
+  &-detail {
+    div {
+      display: -webkit-flex;
+      display: flex;
+      -js-display: flex;
+    }
+    dt:after {
+      content: ':';
+      margin: 0 0.5em;
+    }
+  }
+}
+.shop {
+}

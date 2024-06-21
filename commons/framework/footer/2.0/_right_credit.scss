@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+:root {
+  --footer-logo-width: 50%;
+  --footer-logo-maxwidth: 45vw;
+  --footer-logo-width-pc: 25rem;
+}
+
+#{$siteFooter} {
+  --padding-v: 5vh;
+  padding: var(--padding-v) var(--padding-h);
+  color: var(--footer-color-text);
+  background-color: var(--footer-color-bg);
+  &-logo {
+    width: var(--footer-logo-width);
+    max-width: var(--footer-logo-maxwidth);
+  }
+  @include MQ(laptop) {
+    // --padding-v: 10vh;
+    display: grid;
+    grid-template:
+      'nav credit' auto
+      / auto auto;
+    &-logo {
+      width: var(--footer-logo-width-pc);
+    }
+  }
+  &-credit {
+    display: -webkit-flex;
+    display: flex;
+    -js-display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
+    text-align: right;
+
+    @include MQ(laptop) {
+      grid-area: credit;
+    }
+  }
+}
+
+.shopInfo {
+  font-size: 85%;
+  font-style: normal;
+  @include margin-vertical($ratio: 0.25);
+
+  &-tel {
+    font-size: 1.75em;
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
+    a {
+      display: block;
+      span {
+        font-size: 50%;
+      }
+    }
+  }
+  &-detail {
+    font-size: 85%;
+    dt,
+    dd {
+      display: inline-block;
+    }
+    dt:after {
+      content: ':';
+      margin: 0 0.5em;
+    }
+    &-title {
+      font-size: 120%;
+      margin: 0 0 0.5em;
+    }
+    &-opentime {
+      font-size: 85%;
+    }
+  }
+  &-title {
+    margin: 0 0 0.5em;
+  }
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+  &-snss {
+    margin: 2em 0 0;
+    & > * {
+      display: inline-block;
+      &:not(:first-child) {
+        margin-left: 0.5em;
+      }
+    }
+    svg {
+      width: 1.5em;
+    }
+  }
+}
