@@ -1,0 +1,517 @@
+@charset "utf-8";
+
+@mixin toggle_style() {
+  display: inline-block;
+  background-color: var(--toggle-color-bg, var(--sub-color));
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid var(--toggle-color-border, #666);
+  width: var(--toggle-icon-size, 10vw);
+  max-width: 8rem;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &:before {
+    display: block;
+    margin: 0 !important;
+  }
+  & > span {
+    font-weight: bold;
+    font-size: calc(var(--toggle-icon-size) / 6);
+    margin-top: 0.25em;
+  }
+}
+
+/* icon */
+
+@mixin svgIcon_setparent($svg: false, $color: var(--text-color, #333)) {
+  @if ($svg) {
+    position: relative;
+    padding-left: 1.5em;
+    &:before {
+      position: absolute;
+      left: 0;
+      display: inline-block;
+      width: 1em;
+      height: 1.2em;
+      content: '';
+      background-color: $color;
+      transition: background-color 0.4s;
+      vertical-align: sub;
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center center;
+
+      -webkit-mask-image: url('data:image/svg+xml;utf-8,#{$svg}');
+      -webkit-mask-size: contain;
+      mask-image: url('data:image/svg+xml;utf-8,#{$svg}');
+    }
+  }
+}
+@mixin svgIcon($svg: false, $color: var(--text-color, #333)) {
+  @if not($svg) {
+    $svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM281 385c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l71-71L136 280c-13.3 0-24-10.7-24-24s10.7-24 24-24l182.1 0-71-71c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L393 239c9.4 9.4 9.4 24.6 0 33.9L281 385z"/></svg>';
+  }
+  @if ($svg) {
+    display: inline-block;
+    width: 1em;
+    aspect-ratio: 1 / 1;
+    margin-right: 0.2em;
+    content: '';
+    background-color: $color;
+    transition: background-color 0.4s;
+    vertical-align: sub;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center center;
+
+    -webkit-mask-image: url('data:image/svg+xml;utf-8,#{$svg}');
+    -webkit-mask-size: contain;
+    mask-image: url('data:image/svg+xml;utf-8,#{$svg}');
+  }
+}
+
+/* styles */
+@mixin bg-filter($opacity: 0.3, $mode: black) {
+  $color: #000;
+  @if $mode != black {
+    $color: #fff;
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 0;
+    background-color: $color;
+    opacity: $opacity;
+  }
+}
+@mixin bg-blur {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    background: inherit;
+    filter: blur(5px) brightness(80%);
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    z-index: -1;
+    opacity: 1;
+  }
+}
+@mixin underline_marker($color: var(--strong-color, #666), $size: 0.2rem) {
+  background: linear-gradient(transparent 80%, $color 0%);
+  padding: 0 $size 0.25em;
+  display: inline;
+}
+/* title */
+@mixin title-border-side($color: var(--border-color), $center: true, $size: 2px) {
+  display: -webkit-flex;
+  display: flex;
+  -js-display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+
+  &:after {
+    content: '';
+    border-bottom: $size solid $color;
+    flex: 1 0 auto;
+    -webkit-flex: 1 0 auto;
+    transform: translateY(-50%);
+  }
+  @if $center == true {
+    &:before {
+      content: '';
+      border-bottom: $size solid $color;
+      flex: 1 0 auto;
+      -webkit-flex: 1 0 auto;
+      transform: translateY(-50%);
+    }
+  }
+
+  &:after {
+    margin-left: 1em;
+  }
+  @if $center == true {
+    &:before {
+      margin-right: 1em;
+    }
+  }
+  @include MQ(tablet) {
+    &:after {
+      margin-left: 2em;
+    }
+    @if $center == true {
+      &:before {
+        margin-right: 2em;
+      }
+    }
+  }
+  @content;
+}
+/* base */
+@mixin font-smoothing($value: on) {
+  @if $value == on {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  } @else {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
+%clearfix {
+  *zoom: 1;
+
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+/* animate */
+@mixin animate($time: 1s) {
+  -webkit-animation-duration: $time;
+  animation-duration: $time;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.-fadeIn {
+  @include animate;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+.-horizon {
+  animation: horizontal 2s ease infinite;
+}
+
+%animation-horizon {
+  animation: horizontal 2s ease infinite;
+}
+
+%animation-horizon-fast {
+  animation: horizontal 1s ease infinite;
+}
+
+%animation-horizon-slow {
+  animation: horizontal 5s ease infinite;
+}
+@keyframes horizontal {
+  0% {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+
+  6% {
+    -webkit-transform: translate(5px, 0);
+    -ms-transform: translate(5px, 0);
+    transform: translate(5px, 0);
+  }
+
+  12% {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+
+  18% {
+    -webkit-transform: translate(5px, 0);
+    -ms-transform: translate(5px, 0);
+    transform: translate(5px, 0);
+  }
+
+  24% {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+
+  30% {
+    -webkit-transform: translate(5px, 0);
+    -ms-transform: translate(5px, 0);
+    transform: translate(5px, 0);
+  }
+
+  100%,
+  36% {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* nav */
+@mixin menu-sideborders($height: 50%, $color: var(--border-color)) {
+  position: relative;
+
+  &:after,
+  &:before {
+    content: '';
+    display: block;
+    height: $height;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.3;
+  }
+
+  &:before {
+    border-left: 1px solid $color;
+  }
+
+  &:last-child {
+    &:after {
+      right: 0;
+      border-right: 1px solid $color;
+    }
+  }
+}
+/* list */
+@mixin ul-list($style: 'caret-right', $color: var(--text-color, #333)) {
+  position: relative;
+  // padding-left: 2rem;
+
+  li {
+    position: relative;
+    padding-left: 1.5em;
+
+    &:before {
+      content: '';
+      height: 1em;
+      width: 1em;
+      background-color: $color;
+      transition: background-color 0.4s;
+      vertical-align: middle;
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center center;
+
+      position: absolute;
+      left: 0;
+      top: 0.4em;
+
+      @if ($style == 'dot') {
+        -webkit-mask-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-352a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>');
+        -webkit-mask-size: contain;
+        mask-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-352a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>');
+      } @else {
+        -webkit-mask-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+        -webkit-mask-size: contain;
+        mask-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>');
+      }
+    }
+  }
+}
+
+@mixin ol-counter($dir: 'left') {
+  counter-reset: number;
+  li {
+    position: relative;
+    &:not(:first-child) {
+      margin-top: 2em;
+    }
+  }
+  li:before {
+    counter-increment: number;
+    content: counter(number);
+    position: absolute;
+    background-color: var(--main-color);
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 80%;
+    font-weight: bold;
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+  }
+  @if ($dir == left) {
+    li {
+      padding-left: 4rem;
+    }
+    li:before {
+      top: -0.2em;
+      left: 0;
+    }
+  } @else if $dir == center-top {
+    li {
+    }
+    li:before {
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+@mixin ol-blockquote() {
+  counter-reset: number;
+  li {
+    position: relative;
+    padding-left: 4rem;
+    &:not(:first-child) {
+      margin-top: 1.5em;
+    }
+  }
+  li:before {
+    counter-increment: number;
+    content: counter(number);
+    position: absolute;
+    background-color: #cccccc;
+    color: #666;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    top: 0.25rem;
+    left: 0;
+  }
+}
+
+/* buttons */
+
+@mixin btns() {
+  display: -webkit-flex;
+  display: flex;
+  -js-display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  @include margin-vertical($bottom: false, $ratio: 0.25);
+  & > * {
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+@mixin btn-text_icon($svg: null, $icon_position: 'right', $color: var(--sub-color)) {
+  @if $svg == null {
+    $svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM241 377c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l87-87-87-87c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L345 239c9.4 9.4 9.4 24.6 0 33.9L241 377z"/></svg>';
+  }
+
+  display: grid;
+  column-gap: 0.5em;
+  align-items: center;
+  width: fit-content;
+
+  @if $icon_position == 'right' {
+    grid-template-columns: auto 1fr;
+    &:after {
+      content: '';
+      display: inline-block;
+      inline-size: 1ex;
+      aspect-ratio: 1;
+      @include svgIcon($svg, $color);
+    }
+  } @else if $icon_position == 'left' {
+    grid-template-columns: 1fr auto;
+    &:before {
+      content: '';
+      display: inline-block;
+      inline-size: 1ex;
+      aspect-ratio: 1;
+      @include svgIcon($svg, $color);
+    }
+  }
+}
+@mixin btn-bar() {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  column-gap: 1em;
+  align-items: center;
+  inline-size: min(100%, var(--btn-width, 25em));
+  padding: 1em;
+  color: #fff;
+  background-color: var(--sub-color, #333);
+  transition: all 0.5s ease-out;
+  &:hover {
+    scale: 1.05;
+  }
+  &:before {
+    content: '';
+  }
+  &:after {
+    content: '';
+    display: inline-block;
+    inline-size: 1ex;
+    aspect-ratio: 1;
+    border-block-start: 1px solid;
+    border-inline-end: 1px solid;
+    justify-self: end;
+    rotate: 45deg;
+  }
+}
+@mixin btn-options() {
+  transition: all 0.5s ease-out;
+  &.--align-center {
+    margin: auto;
+  }
+  &.--align-right {
+    margin-left: auto;
+  }
+  &:not(:first-child) {
+    margin-top: 1em;
+  }
+  &:hover {
+    scale: 1.05;
+  }
+}
+
+/* functions */
+@function str-replace($substr, $newsubstr, $str, $all: false) {
+  $pos: str-index($str, $substr);
+
+  @while $pos != null {
+    $strlen: str-length($substr);
+    $start: str-slice($str, 0, $pos - 1);
+    $end: str-slice($str, $pos + $strlen);
+    $str: $start + $newsubstr + $end;
+
+    @if $all == true {
+      $pos: str-index($str, $substr);
+    } @else {
+      $pos: null;
+    }
+  }
+  @return $str;
+}
+@mixin kerning() {
+  font-feature-settings: 'palt';
+}

@@ -14,7 +14,7 @@ h4 {
 }
 ul,
 ol {
-  line-height: 1.4;
+  line-height: 1.5;
   // & > *:not(:first-child) {
   //   margin-top: 1.5em;
   // }
@@ -130,7 +130,7 @@ img[src$='svg'] {
 
 br {
   &.-pc {
-    @include MQ(sp) {
+    @include MQ(sp-only) {
       display: none;
     }
   }

@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+$siteNaviHeight-sp: 7vh !default;
+
+#{$siteHeader} {
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: -1;
+    background-color: var(--header-color-bg);
+    opacity: 0.6;
+  }
+  @include MQ(lower-tablet) {
+    text-align: center;
+    &-wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 99;
+      padding: 1rem 0;
+    }
+  }
+  @include MQ(laptop) {
+    &-wrap {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      padding: 1rem 0;
+
+      .inner {
+        display: -webkit-flex;
+        display: flex;
+        -js-display: flex;
+      }
+      #{$siteNavi} {
+        width: 70%;
+        margin-left: auto;
+        display: grid;
+        place-items: center;
+      }
+    }
+    & {
+      width: 25%;
+    }
+  }
+}
+
+#gNav {
+  display: flex;
+  width: 100%;
+  & > * {
+    flex: 1;
+    position: relative;
+    &:not(:first-child) {
+      @include menu-sideborders();
+    }
+  }
+  a {
+    display: block;
+    padding: 1em 2em;
+    text-align: center;
+    .ja {
+      font-weight: bold;
+      @include MQ(lower-tablet) {
+        padding-top: 2.5vw;
+        font-size: 80%;
+      }
+    }
+    @include MQ(laptop) {
+      color: #111;
+    }
+    &:before {
+      display: block;
+      width: 10vw;
+      height: 10vw;
+      line-height: 10vw !important;
+      text-align: center;
+      font-size: 80%;
+      color: var(--header-color-bg);
+      background-color: var(--header-color-bg);
+      border: 2px solid var(--header-color-bg);
+      border-radius: 50%;
+      @include MQ(lower-tablet) {
+        position: absolute;
+        top: 0%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      @include MQ(laptop) {
+        width: 3rem;
+        height: 3rem;
+        line-height: 3rem !important;
+        vertical-align: bottom;
+      }
+    }
+  }
+}
+@include MQ(lower-tablet) {
+  #{$siteNavi} {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    .inner {
+      padding: 0;
+    }
+  }
+
+  #{$siteFooter} {
+    padding-bottom: $siteNaviHeight-sp;
+  }
+  #gNav {
+    background-color: var(--header-color-bg);
+    // background-color: $navBgColor;
+    $selector: &;
+    height: $siteNaviHeight-sp;
+
+    a {
+      display: grid;
+      place-items: center;
+      // color: $navColor;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

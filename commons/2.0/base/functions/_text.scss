@@ -1,0 +1,63 @@
+@charset "utf-8";
+
+@mixin text-notosansjp {
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif, Arial, Helvetica;
+}
+@mixin text-gothic {
+  font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro', 'Yu Gothic Medium', '游ゴシック Medium', YuGothic, '游ゴシック体', 'メイリオ', sans-serif, Arial, Helvetica;
+}
+@mixin text-mincho {
+  font-family: '游明朝', YuMincho, 'ヒラギノ明朝 ProN W3', 'Hiragino Mincho ProN', 'HG明朝E', 'ＭＳ Ｐ明朝', 'ＭＳ 明朝', serif;
+  html[lang='en-US'] & {
+    font-family: Garamond、Times New Roman、serif;
+  }
+  html[lang='zh-hans'] & {
+    font-family: SimSun, serif;
+  }
+}
+@mixin text-vertical {
+  -webkit-writing-mode: vertical-rl;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+}
+@mixin text-shadowed($color: rgba(0, 0, 0, 1)) {
+  text-shadow: 0 2px 1px $color;
+}
+@mixin text-wordBreak() {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+@mixin text-parent-marquee() {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: '';
+    white-space: nowrap;
+    display: inline-block;
+  }
+  & > * {
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+    animation-name: marquee;
+    animation-timing-function: linear;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    line-height: 1;
+  }
+  & > *:hover {
+    animation-play-state: paused;
+    cursor: default;
+  }
+  @keyframes marquee {
+    0% {
+      left: 100%;
+      transform: translate(0);
+    }
+    100% {
+      left: 0;
+      transform: translate(-100%);
+    }
+  }
+}

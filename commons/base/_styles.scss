@@ -14,7 +14,7 @@
     }
   }
 }
-@mixin btn($align: 'center') {
+@mixin btn($align: "center") {
   display: block;
   @include MQ(lower-tablet) {
     margin-top: 2rem;
@@ -31,10 +31,11 @@
     text-decoration: none;
     border-radius: 1rem;
     text-align: center;
+    transition: all 0.5s ease-out;
 
     &:before {
       display: inline-block;
-      content: '';
+      content: "";
       height: 1em;
       width: 1em;
       background-color: var(--btn-color-text);
@@ -49,7 +50,7 @@
       mask-repeat: no-repeat;
     }
     &:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
   }
 
@@ -66,7 +67,7 @@
 
   &:before {
     display: block;
-    content: '';
+    content: "";
     // padding-top: 62%;
     padding-top: 71%;
   }
@@ -114,7 +115,7 @@
   color: var(--caution-color);
 
   &:before {
-    content: '左右にスクロールできます';
+    content: "左右にスクロールできます";
   }
 }
 /* lists */
@@ -153,7 +154,7 @@
     }
 
     &:before {
-      content: '※';
+      content: "※";
       margin-right: 0.5em;
     }
   }

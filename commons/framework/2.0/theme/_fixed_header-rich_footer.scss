@@ -153,7 +153,7 @@
   &-logo {
     display: block;
     margin-right: auto;
-    max-width: var(--header-logo-maxWidth, 14rem);
+    width: var(--header-logo-maxWidth, 14rem);
   }
   @include MQ(laptop) {
     // position: relative;
@@ -248,9 +248,14 @@ nav {
       // margin-top: 0.5em;
     }
     &:hover {
-      // transform: scale(1.1);
       .-main {
         color: var(--main-color);
+        &:is(.--scrolled *) {
+          color: var(--scrolled-nav-color-link-hover, #333);
+        }
+      }
+      @include MQ(laptop) {
+        scale: 1.1;
       }
     }
   }

@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+$siteNavi: '#siteNavi' !default;
+$siteControls: '#siteControls' !default;
+$toggle-siteNavi: '#toggle-siteNavi' !default;
+
+#{$siteNavi} {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  color: var(--sitenavi-color-text, #fff);
+  background-color: var(--sitenavi-color-bg, #111);
+  transition: all 0.25s ease-out;
+  visibility: hidden;
+  z-index: -1;
+  opacity: 0;
+  overflow: auto;
+  display: grid;
+  place-items: center;
+  padding: 5rem 10vw;
+  a {
+    color: var(--sitenavi-color-link, var(--sitenavi-color-text));
+  }
+
+  &.is-active {
+    visibility: inherit;
+    opacity: 1;
+    z-index: 50;
+  }
+  @include MQ(laptop) {
+    display: none;
+  }
+}
+#{$siteControls} {
+  position: fixed;
+  bottom: var(--siteControls-padding-bottom, 1rem);
+  right: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: end;
+  padding: 0 var(--padding-h);
+}
+
+#{$toggle-siteNavi} {
+  display: inline-block;
+  background-color: var(--toggle-color, var(--sub-color));
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid var(--toggle-border-color, #666);
+  width: var(--toggle-icon-size, 6rem);
+  height: var(--toggle-icon-size, 6rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  & > span {
+    font-weight: bold;
+    font-size: 60%;
+    color: #fff;
+    margin-top: 0.25em;
+  }
+
+  &:before {
+    display: block;
+    @include svgIcon(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>',
+      $color: var(--toggle-icon-color, #c0c0c0)
+    );
+  }
+  &.is-active {
+    &:before {
+      @include svgIcon(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>',
+        $color: var(--toggle-icon-color, #c0c0c0)
+      );
+    }
+  }
+}
